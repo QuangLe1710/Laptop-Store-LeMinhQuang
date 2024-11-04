@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ Hàng</title>
+    <link rel="stylesheet" href="assets/css/cart.css">
+    <script src="assets/js/cart.js" defer></script> <!-- Liên kết tệp JavaScript -->
+</head>
+<body>
+    <div class="container">
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Tên Sản Phẩm</th>
+                    <th>Giá (VNĐ)</th>
+                    <th>Số Lượng</th>
+                    <th>Tổng</th>
+                    <th>Hành Động</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>[New Outlet] Acer Nitro 5 AN515-58 (Core i7 - 12650H, 16GB, 1TB, RTX 4050 6GB)</td>
+                    <td id="price-1" class="product-price">21.690.000</td>
+                    <td>
+                        <button class="quantity-btn">-</button>
+                        <input type="number" value="1" min="1" class="quantity-input">
+                        <button class="quantity-btn">+</button>
+                    </td>
+                    <td><span class="item-total" id="item-total-1">21.690.000 VNĐ</span></td>
+                    <td><button class="remove-btn">Xóa</button></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>[Product 2] Tên sản phẩm khác</td>
+                    <td id="price-2" class="product-price">24.500.000</td>
+                    <td>
+                        <button class="quantity-btn">-</button>
+                        <input type="number" value="1" min="1" class="quantity-input">
+                        <button class="quantity-btn">+</button>
+                    </td>
+                    <td><span class="item-total" id="item-total-2">24.500.000 VNĐ</span></td>
+                    <td><button class="remove-btn">Xóa</button></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h2>Tổng Cộng: <span class="total-amount">0 </span></h2>
+        <h2>Thanh Toán: <span class="total-price">0 </span></h2>
+        
+        <div class="form-container">
+            <div class="cart-left">
+                <div class="box-cart">
+                    <div class="title-box-cart">1. Khách hàng khai báo thông tin</div>
+                    <div class="content-box-cart">
+                        <b style="font-size:14px;">Thông tin người mua</b><br>
+                        <span style="font-size:11px;">Những phần đánh dấu (*) là bắt buộc</span>
+                        <div class="space10"></div>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td width="95">Họ tên*</td>
+                                    <td colspan="3"><input type="text" class="inputText" name="user_info[name]" id="buyer_name"></td>
+                                </tr>
+                                <tr>
+                                    <td>Điện thoại*</td>
+                                    <td colspan="3"><input type="text" class="inputText" name="user_info[tel]" id="buyer_tel"></td>
+                                </tr>
+                                <tr>
+                                    <td>Địa chỉ*</td>
+                                    <td colspan="3"><input type="text" class="inputText" name="user_info[address]" id="buyer_address"></td>
+                                </tr>
+                                <tr>
+                                    <td>Email*</td>
+                                    <td colspan="3"><input type="text" class="inputText" name="user_info[email]" id="buyer_email"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="cart-right">
+                <div class="box-cart">
+                    <div class="title-box-cart">2. Ghi chú cho đơn hàng</div>
+                    <div class="content-box-cart">
+                        <textarea name="user_info[note]" id="ship_to_note" style="width: 100%; height: 87px; padding: 5px;"></textarea>
+                    </div>
+                </div>
+                <div class="box-cart">
+                    <div class="title-box-cart">3. Chọn phương thức thanh toán</div>
+                    <div class="content-box-cart">
+                        <table>
+                            <tbody>
+                               
+                                <tr>
+                                    <td valign="top"><input id="pay_1_input" name="pay_method" value="1" type="radio"></td>
+                                    <td>
+                                        <label for="pay_1_input">Thanh toán khi nhận hàng (COD)</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td valign="top"><input id="pay_2_input" name="pay_method" value="2" type="radio"></td>
+                                    <td>
+                                        <label for="pay_2_input">Thanh toán online</label>
+                                        <p id="bank-transfer-info" style="display: none;">Thực hiện thanh toán vào tài khoản ngân hàng của chúng tôi. Vui lòng sử dụng Mã đơn hàng của bạn trong phần Nội dung đơn đặt hàng thành công. Đơn hàng sẽ đươc giao sau khi tiền đã chuyển.
+                                            <br>Thông tin tài Khoản ngân hàng:
+                                            
+                                            <br>– STK: 986502468;
+                                            <br>– Chủ TK: Hoàng Thị Yến;
+                                            <br>– Tại ngân hàng ACB chi nhánh Hoàng Cầu - Hà Nội.
+                                        </p>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td valign="top"><input id="pay_3_input" name="pay_method" value="3" type="radio"></td>
+                                    <td>
+                                        <label for="pay_3_input">Thanh toán trả góp</label>
+                                        <p id="tra-gop-infor" style="display: none;">
+                                            Hỗ trợ trả góp qua thẻ tín dụng Visa, Master, JCB.
+                                        </p>
+                                    </td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="product-actions-single">
+                    <button type="submit" id="btn-submit" class="action-button green">Gửi đơn hàng</button>
+                    <input type="hidden" name="send_order" value="yes">
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html> 

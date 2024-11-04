@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Ẩn tất cả các phần quản lý khi load trang */
+        .management-section {
+            display: none;
+        }
+
+        /* Mặc định hiển thị quản lý sản phẩm khi load trang */
+        #productManagement {
+            display: block;
+        }
+
+        /* Logo và thanh điều hướng */
+        .navbar {
+            margin-bottom: 20px;
+        }
+
+        .navbar-brand img {
+            max-width: 150px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Logo và thanh điều hướng -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTxAYStJQspxDg_UK1gbYAEuo9X9BbZGrWIw&s" alt="Logo trang web">
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Trang chủ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="logout()">Đăng xuất</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#" onclick="showSection('productManagement')">
+                                <i class="fa-solid fa-box"></i>
+                                Quản lý sản phẩm
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" onclick="showSection('accountManagement')">
+                                <i class="fa-solid fa-user"></i>
+                                Quản lý tài khoản
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" onclick="showSection('orderManagement')">
+                                <i class="fa-solid fa-file-invoice"></i>
+                                Quản lý đơn hàng
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Main content -->
+            <main class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                <!-- Quản lý sản phẩm -->
+                <section id="productManagement" class="management-section mt-4">
+                    <h2>Quản lý sản phẩm</h2>
+                    <button class="btn btn-success mb-3" onclick="addProduct()">Thêm sản phẩm</button>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Giá</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productList">
+                            <tr>
+                                <td>1</td>
+                                <td>Laptop ABC</td>
+                                <td>15,000,000 VND</td>
+                                <td>
+                                    <button class="btn btn-warning btn-sm">Sửa</button>
+                                    <button class="btn btn-danger btn-sm">Xóa</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- Quản lý tài khoản -->
+                <section id="accountManagement" class="management-section mt-4">
+                    <h2>Quản lý tài khoản</h2>
+                    <button class="btn btn-success mb-3" onclick="addAccount()">Thêm tài khoản</button>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tên tài khoản</th>
+                                <th>Email</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody id="accountList">
+                            <tr>
+                                <td>1</td>
+                                <td>user123</td>
+                                <td>user123@gmail.com</td>
+                                <td>
+                                    <button class="btn btn-warning btn-sm">Sửa</button>
+                                    <button class="btn btn-danger btn-sm">Xóa</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- Quản lý đơn hàng -->
+                <section id="orderManagement" class="management-section mt-4">
+                    <h2>Quản lý đơn hàng</h2>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Khách hàng</th>
+                                <th>Tổng tiền</th>
+                                <th>Trạng thái</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orderList">
+                            <tr>
+                                <td>1</td>
+                                <td>Nguyễn Văn A</td>
+                                <td>20,000,000 VND</td>
+                                <td>Đã giao</td>
+                                <td>
+                                    <button class="btn btn-warning btn-sm">Sửa</button>
+                                    <button class="btn btn-danger btn-sm">Xóa</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Hàm để ẩn tất cả các section và chỉ hiện section được chọn
+        function showSection(sectionId) {
+            // Ẩn tất cả các phần quản lý
+            const sections = document.querySelectorAll('.management-section');
+            sections.forEach(section => {
+                section.style.display = 'none';
+            });
+
+            // Hiển thị phần được chọn
+            document.getElementById(sectionId).style.display = 'block';
+        }
+
+        // Hàm thêm sản phẩm (giả lập)
+        function addProduct() {
+            const productTable = document.getElementById('productList');
+            const newRow = `
+                <tr>
+                    <td>2</td>
+                    <td>Laptop XYZ</td>
+                    <td>18,000,000 VND</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm">Sửa</button>
+                        <button class="btn btn-danger btn-sm">Xóa</button>
+                    </td>
+                </tr>
+            `;
+            productTable.innerHTML += newRow;
+        }
+
+        // Hàm thêm tài khoản (giả lập)
+        function addAccount() {
+            const accountTable = document.getElementById('accountList');
+            const newRow = `
+                <tr>
+                    <td>2</td>
+                    <td>user456</td>
+                    <td>user456@gmail.com</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm">Sửa</button>
+                        <button class="btn btn-danger btn-sm">Xóa</button>
+                    </td>
+                </tr>
+            `;
+            accountTable.innerHTML += newRow;
+        }
+
+        // Hàm đăng xuất (giả lập)
+        function logout() {
+            alert("Bạn đã đăng xuất thành công!");
+            window.location.href = "login.html"; // Chuyển đến trang đăng nhập
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

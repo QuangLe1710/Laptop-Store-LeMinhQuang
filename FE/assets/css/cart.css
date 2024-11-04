@@ -1,0 +1,101 @@
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.total {
+    margin: 20px 0;
+    font-weight: bold;
+}
+
+.form-container {
+    display: flex; /* Sử dụng Flexbox */
+    justify-content: space-between; /* Căn giữa các cột */
+}
+
+.cart-left, .cart-right {
+    width: 48%; /* Đặt chiều rộng cho các cột */
+}
+
+.box-cart {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.title-box-cart {
+    background-color: #f8f8f8;
+    padding: 10px;
+    font-weight: bold;
+}
+
+.content-box-cart {
+    padding: 10px;
+}
+
+.inputText {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box; /* Đảm bảo padding không vượt quá chiều rộng */
+}
+
+textarea {
+    resize: none; /* Không cho phép thay đổi kích thước */
+}
+
+.action-button.green {
+    background-color: #ff8f00;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 11px 40px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.action-button.green:hover {
+    background-color: #d27a0a; 
+}
+
+#bank-transfer-info {
+    background-color: #ff8f00; /* Màu nền cam */
+    color: #fff; /* Màu chữ trắng */
+    padding: 10px; /* Khoảng cách bên trong */
+    border-radius: 5px; /* Bo góc */
+    margin-top: 5px; /* Khoảng cách phía trên */
+    font-weight: bold; /* Chữ đậm */
+    
+}
+
+#tragop-infor{
+    background-color: #ff8f00; /* Màu nền cam */
+    color: #fff; /* Màu chữ trắng */
+    padding: 10px; /* Khoảng cách bên trong */
+    border-radius: 5px; /* Bo góc */
+    margin-top: 5px; /* Khoảng cách phía trên */
+    font-weight: bold; /* Chữ đậm */
+}
