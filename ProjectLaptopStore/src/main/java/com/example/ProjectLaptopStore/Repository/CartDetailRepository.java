@@ -15,5 +15,6 @@ public interface CartDetailRepository extends JpaRepository<CartDetailsEntity,In
             "JOIN products p ON p.ProductID = cd.ProductID " +
             "WHERE cd.CartID = :cartID",nativeQuery = true)
     List<Object[]> getListCartDetail(@Param("cartID") int cartID);
-
+    //tim kiem cartdetail bằng cartid
+    CartDetailsEntity findByCart_CartID(Integer cartID);
 }

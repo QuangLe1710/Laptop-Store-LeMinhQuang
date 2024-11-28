@@ -17,4 +17,7 @@ public interface CartDetailService {
 
     // cap nhat so luong va so tien khi bam vao dau -
     void subtractionQuantity(int cartDetailID);
+
+    //them san pham vao gio hang
+    void addProductToCart(int cartID, int productID);
 }

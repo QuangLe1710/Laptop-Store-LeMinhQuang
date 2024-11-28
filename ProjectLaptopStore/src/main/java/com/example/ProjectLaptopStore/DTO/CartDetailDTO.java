@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 @Getter
 @Builder
 public class CartDetailDTO {
-
     private int cartDetailID;
     private int productId;
     private String productName;

@@ -20,7 +20,7 @@ public class CartEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer CartID;
+    private Integer cartID;
     @Enumerated(EnumType.STRING)
     @Column(name = "Status")
     private CardStatus_Enum status = CardStatus_Enum.active;

@@ -3,7 +3,11 @@ package com.example.ProjectLaptopStore.Service.Impl;
 
 import com.example.ProjectLaptopStore.DTO.CartDetailDTO;
 import com.example.ProjectLaptopStore.Entity.CartDetailsEntity;
+import com.example.ProjectLaptopStore.Entity.CartEntity;
+import com.example.ProjectLaptopStore.Entity.ProductsEntity;
 import com.example.ProjectLaptopStore.Repository.CartDetailRepository;
+import com.example.ProjectLaptopStore.Repository.CartRepository;
+import com.example.ProjectLaptopStore.Repository.ProductRepository;
 import com.example.ProjectLaptopStore.Service.CartDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +23,9 @@ public class CartDetailServiceImpl implements CartDetailService {
 
     @Autowired
     CartDetailRepository cartDetailRepository;
+    private ProductRepository productRepository;
+    @Autowired
+    private CartRepository cartRepository;
 
 
     // lay ra danh sach cartdetail ra gio hang
@@ -82,5 +89,31 @@ public class CartDetailServiceImpl implements CartDetailService {
             cartDetailRepository.save(cartDetailsEntity);
         }
         else throw new RuntimeException("cart detail not found");
+    }
+
+    @Override
+    public void addProductToCart(int cartID, int productID) {
+        CartEntity cart = cartRepository.getCartByCustomerId(cartID);
+        CartDetailsEntity cartDetailsEntity = new CartDetailsEntity();
+        ProductsEntity productsEntity = productRepository.findById(productID).get();
+        if (cart != null) {
+            //kiem tra xem co cung 1 san pham khong
+            for(CartDetailsEntity cartDetail : cart.getCartDetails()) {
+                if(cartDetail.getProduct().getProductID() == productID) {
+                    cartDetail.setQuantity(cartDetail.getQuantity() + 1 );
+                    //cap nhat
+                    cartDetailRepository.save(cartDetail);
+                    return;
+                }
+            }
+            //tao cartdetail moi
+            cartDetailsEntity.setCart(cart);
+            cartDetailsEntity.setProduct(productsEntity);
+            cartDetailsEntity.setQuantity(1);
+            BigDecimal priceBigDecimal = new BigDecimal(Float.toString(productsEntity.getPrice()));
+            cartDetailsEntity.setPrice(priceBigDecimal);
+            cartDetailRepository.save(cartDetailsEntity);
+        }
+        else throw new RuntimeException("can not add product to cart");
     }
 }
