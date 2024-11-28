@@ -59,7 +59,7 @@ public class UserControllerTest {
     //API lấy nhà cung cấp cho checkbox(cả checkbox và btn)
     @GetMapping(value = "/user/checkboxsuppliers/")
     public Map<Integer,String> getSuppliersCheckbox(){
-        Map<Integer,String> result = productService.getBrandForCheckbox();
+        Map<Integer,String> result = suppliersService.getSupplierForCheckbox();
         return result;
     }
 

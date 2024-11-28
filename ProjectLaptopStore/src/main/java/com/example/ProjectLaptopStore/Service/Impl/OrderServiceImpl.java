@@ -111,6 +111,18 @@ public class OrderServiceImpl implements OrderService {
         return result;
     }
 
+    @Override
+    public List<OrderDTO> getListOrderByCustomerID(int customerID) {
+        List<OrdersEntity> orders = orderRepository.findByCustomerID(customerID);
+        List<OrderDTO> dto = new ArrayList<>();
+        for (OrdersEntity order : orders) {
+            OrderDTO orderDTO = new OrderDTO();
+            orderDTO = modelMapper.map(order, OrderDTO.class);
+            dto.add(orderDTO);
+        }
+        return dto;
+    }
+
 
     @Override
     public void createOrder(OrderDTO dto,int id) {
@@ -132,21 +144,15 @@ public class OrderServiceImpl implements OrderService {
         if(pm == null){
             throw new RuntimeException("You must select payment method");
         }
-
-        // tim kiem dia chia
         ShippingAddressEntity sa = shippingAddressesRepository.findById(dto.getAddressID()).orElse(null);
-
-        // kiem tra ton tai dia chi khong
         if(sa == null){
             throw new RuntimeException("you must select a shipping address");
         }
 
 
 
-        // tao moi 1 orderEntity
         OrdersEntity order = new OrdersEntity();
 
-        // set cac du lieu duoc gui ve cho order entity
         order.setCustomer(c);
         order.setOrderDate(new Date());
         order.setTotalAmount(dto.getTotalAmount());
@@ -156,32 +162,19 @@ public class OrderServiceImpl implements OrderService {
         order.setActualDeliveryDate(dto.getActualDeliveryDate());
         order.setPayMentMethod(pm);
         order.setShipAddress(sa);
-
-        // them vao csdl
         entityManager.persist(order);
         entityManager.flush();
-
-        // duyet cac order detail
         for (OrderDetail_createOrderDTO orderdetail : dto.getOrderDetails()) {
 
-            // tao moi order detail
             OrderDetailEntity orderDetailEntity = new OrderDetailEntity();
-
-            // tim kiem san pham
             ProductsEntity products = productRepository.findById(orderdetail.getProductID()).orElse(null);
-
-            // kiem tra ton san pham ton tai khong
             if(products == null){
                 throw new RuntimeException("You must select a product to order");
             }
-
-            // set cac du lieu duoc gui ve cho order detail
             orderDetailEntity.setOrder(order);
             orderDetailEntity.setProduct(products);
             orderDetailEntity.setQuantity(orderdetail.getQuantity());
             orderDetailEntity.setPrice(orderdetail.getPrice());
-
-            // them order detail vao csdl
             entityManager.persist(orderDetailEntity);
             entityManager.flush();
         }
