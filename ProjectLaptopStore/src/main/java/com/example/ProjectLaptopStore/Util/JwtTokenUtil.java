@@ -69,7 +69,8 @@ public class JwtTokenUtil {
     // Lấy thông tin phone từ token (hoặc bất kỳ claim nào khác)
     public String extractPhone(String token) {
         try {
-            return extractClaims(token).get("phone", String.class);
+            //return extractClaims(token).get("phone", String.class);
+            return extractClaims(token).getSubject();
         } catch (SignatureException e) {
             throw new RuntimeException(e);
         }
@@ -152,6 +153,16 @@ public class JwtTokenUtil {
             log.error(e.getMessage() + "Can not create token");
             throw new RuntimeException(e);
         }
+    }
+    public boolean CheckValidateToken(String token) throws JOSEException, ParseException {
+        var tk = token;
+        JWSVerifier verifier = new MACVerifier(SIGNER_KEY.getBytes());
+        SignedJWT signedJWT = SignedJWT.parse(tk);
+        Date expirationTime = signedJWT.getJWTClaimsSet().getExpirationTime();
+        var verified = signedJWT.verify(verifier);
+        boolean ms = verified && expirationTime.after(new Date());
+
+        return ms;
     }
 }
 

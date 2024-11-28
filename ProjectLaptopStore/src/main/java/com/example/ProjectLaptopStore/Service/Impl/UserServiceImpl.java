@@ -45,6 +45,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -281,8 +282,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User_DTO UserInfor() {
-        var contex = SecurityContextHolder.getContext();
-        String phone = contex.getAuthentication().getName();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+        String phone = customUserDetails.getPhoneNumber();
         UserEntity user = userRepository.findAllByPhoneNumber(phone);
         User_DTO userDTO = modelMapper.map(user,User_DTO.class);
         return userDTO;
