@@ -192,7 +192,7 @@ public class AdminController {
 
     //API lấy thông tin sản phẩm bằng id
     @GetMapping(value = "/product/update/{id}")
-    public Admin_ProductDetailResponseDTO getProductById(@PathVariable(name = "id") List<Integer>  id){
+    public Admin_ProductDetailResponseDTO getProductById(@PathVariable(name = "id") Integer id){
         return productService.adminProductDetail(id);
     }
     

@@ -21,6 +21,7 @@ public interface SuppliersService {
     void updateSupplier(SupplierDTO supplierUpdate);
 
 
+    Map<Integer,String> getSupplierForCheckbox();
 
     // phuong thuc lay ra danh sach nha cung cap
     List<SuppliersEntity> getListSupplier();
