@@ -4,9 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const totalElement = document.querySelector('.total-amount');
     const selectAllCB = document.getElementById('selectAll');
     //sẽ thay đổi sau
-    // localStorage.setItem('authToken', token);
+    const token = localStorage.getItem('authToken');
 
-    const token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMjMxMTE3ODkiLCJpZC1jdXN0b21lciI6MTEsInNjb3BlIjoiY3VzdG9tZXIiLCJpc3MiOiJsYXB0b3BhYmMuY29tIiwiaWQtY2FydCI6MTEsImV4cCI6MTczMjY5NDQ1OCwiaWF0IjoxNzMyNjkwODU4LCJpZC11c2VyIjoyMn0.5MT20DyaiKayTdgqehGfHO5VXMDTLEOFNnLIzlQnQSzOusxb4cuNx_PeQFDBDhDyef1nmvw2gDOG049sdIWZFw';
     //lay dia chi
     fetch('http://localhost:8080/user/shipping-address', {
         method: 'GET', // Phương thức yêu cầu

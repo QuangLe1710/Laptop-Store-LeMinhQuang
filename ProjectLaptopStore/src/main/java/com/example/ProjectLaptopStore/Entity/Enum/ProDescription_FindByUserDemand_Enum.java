@@ -1,8 +1,6 @@
 package com.example.ProjectLaptopStore.Entity.Enum;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public enum ProDescription_FindByUserDemand_Enum {
@@ -28,14 +26,5 @@ public enum ProDescription_FindByUserDemand_Enum {
         }
         return typeDemandMap;
     }
-    public static List<String> toList(){
-        List<String> listDemand = new ArrayList<>();
-        for (ProDescription_FindByUserDemand_Enum key : ProDescription_FindByUserDemand_Enum.values()) {
-            listDemand.add(key.name());
-        }
-        return listDemand;
-    }
-
-
 
 }

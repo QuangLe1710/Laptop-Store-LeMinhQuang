@@ -2,9 +2,7 @@
 package com.example.ProjectLaptopStore.Config;
 
 import com.example.ProjectLaptopStore.Entity.Enum.User_Enum;
-import com.example.ProjectLaptopStore.Repository.UserRepository;
 import jakarta.security.auth.message.callback.SecretKeyCallback;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -13,9 +11,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
@@ -32,8 +27,6 @@ import javax.swing.*;
 @EnableAutoConfiguration
 @EnableMethodSecurity
 public class SecurityConfig {
-
-
     //    private String[] GET_admin = {
 //            "/admin/sellproduct/","/admin/totalmount/","/admin/totalcustomer/",
 //            "/admin/totalcustomer/","/admin/newcustomer/","/admin/countcustomer/",

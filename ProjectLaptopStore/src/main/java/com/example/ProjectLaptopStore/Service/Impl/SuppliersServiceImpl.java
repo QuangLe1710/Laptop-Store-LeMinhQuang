@@ -46,7 +46,16 @@ public class SuppliersServiceImpl implements SuppliersService {
         suppliersRepository.updateSupplier(supplierUpdate, suppliersEntity);
     }
 
-
+    //hàm lấy nhà cung cấp cho checkbox homepage
+    @Override
+    public Map<Integer, String> getSupplierForCheckbox() {
+        Map<Integer,String> suppliers = new HashMap<>();
+        List<SuppliersEntity> suppliersEntities = suppliersRepository.findAll();
+        for (SuppliersEntity supplier : suppliersEntities) {
+            suppliers.put(supplier.getSupplierID(),supplier.getSupplierName());
+        }
+        return suppliers;
+    }
 
     @Override
     //kien thuc spring data

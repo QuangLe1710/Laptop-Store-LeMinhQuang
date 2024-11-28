@@ -1,9 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
     const submitButton = document.getElementById("btn-submit");
     // sẽ thay đổi sau
-    // localStorage.setItem('authToken', token);
-    const token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMjMxMTE3ODkiLCJpZC1jdXN0b21lciI6MTEsInNjb3BlIjoiY3VzdG9tZXIiLCJpc3MiOiJsYXB0b3BhYmMuY29tIiwiaWQtY2FydCI6MTEsImV4cCI6MTczMjY5NDQ1OCwiaWF0IjoxNzMyNjkwODU4LCJpZC11c2VyIjoyMn0.5MT20DyaiKayTdgqehGfHO5VXMDTLEOFNnLIzlQnQSzOusxb4cuNx_PeQFDBDhDyef1nmvw2gDOG049sdIWZFw';
-    submitButton.addEventListener("click", async (event) => {
+
+    
+    const token = localStorage.getItem('authToken');
+
+
+        submitButton.addEventListener("click", async (event) => {
         event.preventDefault();
 
         const selectedAddress = document.querySelector('input[name="address"]:checked');

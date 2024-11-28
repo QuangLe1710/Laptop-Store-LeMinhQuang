@@ -255,7 +255,7 @@ public class UserServiceImpl implements UserService {
                 }
             }
             List<Product_FindTopPurchasedProductsDTO> listOutstandingProduct = productService.findTopPurchasedProductAtService();
-            Map<Integer,String> getBrandCheckboxBtn = productService.getBrandForCheckbox();
+            Map<Integer,String> getSuppliersCheckboxBtn = suppliersService.getSupplierForCheckbox();
             Map<String,String> getPriceCheckbox = Product_FindProductsByPriceRange_Enum.getPriceRanges();
             Map<String,String> getCPUTechnologyCheckbox = productDescriptionService.getCPUTechnologyForCheckbox();
             Map<Integer,Integer> getRamCapacityCheckbox = productDescriptionService.getRamCapacityForCheckbox();
@@ -263,7 +263,7 @@ public class UserServiceImpl implements UserService {
             Map<String,String> getCustomerDemandCheckbox = ProDescription_FindByUserDemand_Enum.typeUserDemand();
             Map<String,String> getScreenSizeCheckbox = productDescriptionService.getScreensizeForCheckbox();
             homeInfor.setGetOutstandingProducts(listOutstandingProduct);
-            homeInfor.setGetSuppliersForCheckboxAndBtn(getBrandCheckboxBtn);
+            homeInfor.setGetSuppliersForCheckboxAndBtn(getSuppliersCheckboxBtn);
             homeInfor.setGetPriceProductForCheckbox(getPriceCheckbox);
             homeInfor.setGetCPUForCheckbox(getCPUTechnologyCheckbox);
             homeInfor.setGetRamForCheckbox(getRamCapacityCheckbox);
@@ -282,11 +282,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public User_DTO UserInfor() {
         var contex = SecurityContextHolder.getContext();
-//        String phone = contex.getAuthentication().getName();
-//        UserEntity user = userRepository.findAllByPhoneNumber(phone);
-        CustomUserDetails customUserDetails = (CustomUserDetails) contex.getAuthentication().getPrincipal();
-        int id = customUserDetails.getId_User();
-        UserEntity user = userRepository.findById(id).orElse(null);
+        String phone = contex.getAuthentication().getName();
+        UserEntity user = userRepository.findAllByPhoneNumber(phone);
         User_DTO userDTO = modelMapper.map(user,User_DTO.class);
         return userDTO;
     }

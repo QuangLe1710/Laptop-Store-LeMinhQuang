@@ -31,6 +31,4 @@ public enum Product_FindProductsByPriceRange_Enum {
         }
         return priceRanges;
     }
-
-
 }
