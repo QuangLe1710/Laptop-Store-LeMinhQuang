@@ -1,6 +1,12 @@
 async function loadDashboardData() {
   try {
-    const response = await fetch("http://localhost:8080/admin/dashboard/");
+    const response = await fetch("http://localhost:8080/admin/dashboard/", {
+      method: "GET", // Phương thức yêu cầu
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`, // Gửi token trong header
+      },
+    });
     const data = await response.json();
 
     // Cập nhật số liệu tổng quan
@@ -140,7 +146,7 @@ async function loadDashboardData() {
       .getElementById("products-sold-chart")
       .getContext("2d");
     new Chart(ctx3, {
-      type: "line", 
+      type: "line",
       data: {
         labels: productsSoldLabels,
         datasets: [
@@ -187,62 +193,65 @@ async function loadDashboardData() {
     });
 
     const TopProductsList = document.getElementById("top-products-list");
-TopProductsList.innerHTML = "";
+    TopProductsList.innerHTML = "";
 
-// Duyệt qua danh sách sản phẩm từ API
-data.topPurchasedProductInMonth.forEach((product) => {
-  // Tạo một phần tử danh sách
-  const li = document.createElement("li");
-  li.classList.add("list-group-item");
+    // Duyệt qua danh sách sản phẩm từ API
+    data.topPurchasedProductInMonth.forEach((product) => {
+      // Tạo một phần tử danh sách
+      const li = document.createElement("li");
+      li.classList.add("list-group-item");
 
-  // Thêm nội dung gồm tên sản phẩm, ảnh và giá
-  li.innerHTML = `
+      // Thêm nội dung gồm tên sản phẩm, ảnh và giá
+      li.innerHTML = `
     <div><strong>${product.productName}</strong></div>
-    <div><img src="${product.imageUrl}" alt="${product.productName}" style="width: 100px; height: auto;"></div>
+    <div><img src="${product.imageUrl}" alt="${
+        product.productName
+      }" style="width: 100px; height: auto;"></div>
     <div>Giá: ${product.price.toLocaleString()} VND</div>
   `;
 
-  // Thêm vào danh sách
-  TopProductsList.appendChild(li);
-});
+      // Thêm vào danh sách
+      TopProductsList.appendChild(li);
+    });
 
     // Cập nhật danh sách top khách hàng trong tháng
-const topCustomersList = document.getElementById("top-customers-list");
-topCustomersList.innerHTML = "";
+    const topCustomersList = document.getElementById("top-customers-list");
+    topCustomersList.innerHTML = "";
 
-// Lọc và hiển thị thông tin top khách hàng từ API
-data.topCustomerInMonth.forEach((customer) => {
-  const li = document.createElement("li");
-  li.classList.add("list-group-item");
-  li.innerHTML = `
+    // Lọc và hiển thị thông tin top khách hàng từ API
+    data.topCustomerInMonth.forEach((customer) => {
+      const li = document.createElement("li");
+      li.classList.add("list-group-item");
+      li.innerHTML = `
     <div><strong>${customer.fullName}</strong></div>
     <div>Email: ${customer.email}</div>
     <div>Số điện thoại: ${customer.phoneNumber}</div>
-    <div>Địa chỉ: ${customer.streetAddress}, ${customer.ward}, ${customer.district}, ${customer.city}, ${customer.address}</div>
+    <div>Địa chỉ: ${customer.streetAddress}, ${customer.ward}, ${
+        customer.district
+      }, ${customer.city}, ${customer.address}</div>
     <div>Tổng chi tiêu: ${customer.totalAmount.toLocaleString()} VND</div>
   `;
-  topCustomersList.appendChild(li);
-});
+      topCustomersList.appendChild(li);
+    });
   } catch (error) {
     console.error("Lỗi khi tải dữ liệu từ API:", error);
   }
 }
 
-
 document.addEventListener("DOMContentLoaded", loadDashboardData);
 
 //   sidebar
 
-const sidebar = document.getElementById('sidebar');
-const wrapper = document.getElementById('wrapper');
-const menuToggle = document.getElementById('menu-toggle');
+const sidebar = document.getElementById("sidebar");
+const wrapper = document.getElementById("wrapper");
+const menuToggle = document.getElementById("menu-toggle");
 
 // nút sidebar
-menuToggle.addEventListener('click', function() {
-  sidebar.classList.toggle('collapsed');
+menuToggle.addEventListener("click", function () {
+  sidebar.classList.toggle("collapsed");
   // màn di động
   if (window.innerWidth <= 768) {
-    wrapper.classList.toggle('collapsed');
+    wrapper.classList.toggle("collapsed");
   }
 });
 

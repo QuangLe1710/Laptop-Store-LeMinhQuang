@@ -497,10 +497,18 @@ label {
   
 }
 /* Giới hạn chiều rộng cụ thể cho từng cột (tuỳ chỉnh theo nhu cầu) */
-td:nth-child(3) { /* Cột chứa tên sản phẩm */
-  width: 40%; /* Cố định chiều rộng cột tên */
+#address-table td:nth-child(1) { /* Cột chứa tên sản phẩm */
+  width: 30%; /* Cố định chiều rộng cột tên */
 }
-
+#address-table td:nth-child(2) { /* Cột chứa tên sản phẩm */
+  width: 20%; /* Cố định chiều rộng cột tên */
+}
+#address-table td:nth-child(3) { /* Cột chứa tên sản phẩm */
+  width: 20%; /* Cố định chiều rộng cột tên */
+}
+#address-table td:nth-child(5) { /* Cột chứa tên sản phẩm */
+  width: 10%; /* Cố định chiều rộng cột tên */
+}
 /* Hình ảnh trong bảng */
 .product-info {
   display: flex; /* Xếp hình ảnh và tên sản phẩm theo hàng ngang */

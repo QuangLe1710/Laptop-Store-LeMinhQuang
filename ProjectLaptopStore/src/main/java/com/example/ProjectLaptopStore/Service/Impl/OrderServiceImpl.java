@@ -4,6 +4,7 @@ import com.example.ProjectLaptopStore.Convert.Order_TotalAmountInMonthDTOConvert
 import com.example.ProjectLaptopStore.DTO.*;
 import com.example.ProjectLaptopStore.Entity.*;
 import com.example.ProjectLaptopStore.Entity.Enum.OrderStatus_Enum;
+import com.example.ProjectLaptopStore.Exception.QuantityExceedsStockException;
 import com.example.ProjectLaptopStore.Repository.*;
 import com.example.ProjectLaptopStore.Service.*;
 import jakarta.persistence.EntityManager;
@@ -143,21 +144,29 @@ public class OrderServiceImpl implements OrderService {
             throw new RuntimeException("you must select a shipping address");
         }
 
-
+        for(OrderDetail_createOrderDTO d : dto.getOrderDetails()){
+            ProductsEntity p = productRepository.findById(d.getProductID()).orElse(null);
+            if(p == null){
+                throw new RuntimeException("Product not found");
+            }
+            if(d.getQuantity() > p.getStockQuantity()){
+                throw new QuantityExceedsStockException("Số lượng sản phẩm trong kho không đủ đáp ứng đơn hàng của bạn. Vui lòng liên hệ 0369298037 để biết thêm chi tiết.");
+            }
+        }
 
         // tao moi 1 orderEntity
         OrdersEntity order = new OrdersEntity();
 
         // set cac du lieu duoc gui ve cho order entity
-        order.setCustomer(c);
-        order.setOrderDate(new Date());
-        order.setTotalAmount(dto.getTotalAmount());
-        order.setShippingFee(dto.getShippingFee());
-        order.setOrderStatus(OrderStatus_Enum.Pending);
-        order.setEstimatedDeliveryDate(dto.getEstimatedDeliveryDate());
-        order.setActualDeliveryDate(dto.getActualDeliveryDate());
-        order.setPayMentMethod(pm);
-        order.setShipAddress(sa);
+            order.setCustomer(c);
+            order.setOrderDate(new Date());
+            order.setTotalAmount(dto.getTotalAmount());
+            order.setShippingFee(dto.getShippingFee());
+            order.setOrderStatus(OrderStatus_Enum.Pending);
+            order.setEstimatedDeliveryDate(dto.getEstimatedDeliveryDate());
+            order.setActualDeliveryDate(dto.getActualDeliveryDate());
+            order.setPayMentMethod(pm);
+            order.setShipAddress(sa);
 
         // them vao csdl
         entityManager.persist(order);
@@ -176,13 +185,13 @@ public class OrderServiceImpl implements OrderService {
             if(products == null){
                 throw new RuntimeException("You must select a product to order");
             }
-
+            products.setStockQuantity(products.getStockQuantity() - orderdetail.getQuantity());
             // set cac du lieu duoc gui ve cho order detail
             orderDetailEntity.setOrder(order);
             orderDetailEntity.setProduct(products);
             orderDetailEntity.setQuantity(orderdetail.getQuantity());
             orderDetailEntity.setPrice(orderdetail.getPrice());
-
+            orderDetailEntity.setLineTotal(orderdetail.getPrice().multiply(new BigDecimal(orderdetail.getQuantity())));
             // them order detail vao csdl
             entityManager.persist(orderDetailEntity);
             entityManager.flush();
@@ -260,4 +269,28 @@ public class OrderServiceImpl implements OrderService {
             entityManager.merge(order);
         }
     }
+
+    @Override
+    public void upateOrderStatus(int orderID, String status) {
+        OrdersEntity entity = orderRepository.findById(orderID).orElse(null);
+        if(entity == null){
+            throw new RuntimeException("You must select a order or your order is null");
+        }
+        OrderStatus_Enum enumValue = OrderStatus_Enum.valueOf(status);
+        entity.setOrderStatus(enumValue);
+        entityManager.merge(entity);
+    }
+
+    @Override
+    public List<Order_AdminOrders> ListAdminOrders() {
+        List<OrdersEntity> entities = orderRepository.findAllOrders();
+        List<Order_AdminOrders> rs = new ArrayList<Order_AdminOrders>();
+        for (OrdersEntity entity : entities) {
+            Order_AdminOrders order = modelMapper.map(entity, Order_AdminOrders.class);
+            rs.add(order);
+        }
+        return rs;
+    }
+
+
 }

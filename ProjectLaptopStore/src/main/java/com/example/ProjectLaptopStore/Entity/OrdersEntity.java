@@ -22,7 +22,7 @@ public class OrdersEntity implements Serializable {
     private Integer OrderID;
     @Column(name = "OrderDate",nullable = false)
     private Date orderDate;
-    @Column(name = "TotalAmount",precision = 10,scale = 2,nullable = false)
+    @Column(name = "TotalAmount",precision = 12,scale = 2,nullable = false)
     private BigDecimal totalAmount;
     @Column(name = "ShippingFee",precision = 10,scale = 2)
     private BigDecimal shippingFee;

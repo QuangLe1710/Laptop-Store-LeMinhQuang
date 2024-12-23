@@ -1,26 +1,26 @@
 const token = localStorage.getItem("authToken");
-console.log("Token của khách hàng : ", token)
-var tokenRequest = decodeJWT(token)
+console.log("Token của khách hàng : ", token);
+var tokenRequest = decodeJWT(token);
 
 function decodeJWT(token) {
-  const base64Url = token.split('.')[1]; // Lấy phần payload (phần giữa)
-  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  const base64Url = token.split(".")[1]; // Lấy phần payload (phần giữa)
+  const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
   const jsonPayload = decodeURIComponent(
     atob(base64)
-      .split('')
-      .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
-      .join('')
+      .split("")
+      .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+      .join("")
   );
   return JSON.parse(jsonPayload);
 }
 
 async function fetchUserInfo() {
   // Lấy token từ localStorage
-  console.log("Token decode : ", decodeJWT(token))
+  console.log("Token decode : ", decodeJWT(token));
 
-  var tokenRequest = decodeJWT(token)
-  console.log("....")
-  console.log("Token id user : ", tokenRequest['id-user'])
+  var tokenRequest = decodeJWT(token);
+  console.log("....");
+  console.log("Token id user : ", tokenRequest["id-user"]);
 
   if (!token) {
     console.error("Token không tồn tại. Vui lòng đăng nhập trước.");
@@ -29,14 +29,17 @@ async function fetchUserInfo() {
 
   try {
     // Thêm tham số id-user vào URL
-    const userId = tokenRequest['id-user'];
-    const response = await fetch(`http://localhost:8080/user/myInfor?id=${userId}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${tokenRequest}`, // Gửi token trong header
-      },
-    });
+    const userId = tokenRequest["id-user"];
+    const response = await fetch(
+      `http://localhost:8080/user/myInfor?id=${userId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // Gửi token trong header
+        },
+      }
+    );
 
     // Xử lý phản hồi
     if (!response.ok) {
@@ -46,33 +49,47 @@ async function fetchUserInfo() {
     console.log("User information: ", data);
     // Hiển thị thông tin tài khoản trong console
     // console.log("Thông tin tài khoản:", data);
-    document.getElementById("infor-name").innerHTML = data.fullName
-    document.getElementById("infor-phoneNumber").innerHTML = data.phoneNumber
-    document.getElementById("infor-email").innerHTML = data.email
+    document.getElementById("infor-name").innerHTML = data.fullName;
+    document.getElementById("infor-phoneNumber").innerHTML = data.phoneNumber;
+    document.getElementById("infor-email").innerHTML = data.email;
     // document.getElementById("infor-pw").innerHTML = data.password
-    document.getElementById("inner-user-name").innerHTML = data.fullName
-    document.getElementById("inner-user-phoneNumber").innerHTML = data.phoneNumber
+    document.getElementById("inner-user-name").innerHTML = data.fullName;
+    document.getElementById("inner-user-phoneNumber").innerHTML =
+      data.phoneNumber;
   } catch (error) {
     console.error("Error fetching user information: ", error);
   }
-
 }
-
 
 // Hàm xử lý sự kiện nút "Lưu thông tin"
 async function handleUpdateInfor() {
   try {
     // Lấy thông tin từ các input
-    const id_cus = tokenRequest['id-user']; // Lấy id-user từ token
+    const id_cus = tokenRequest["id-user"]; // Lấy id-user từ token
     const fullName = document.getElementById("fullName-field").value.trim();
-    const phoneNumber = document.getElementById("phoneNumber-field").value.trim();
+    const phoneNumber = document
+      .getElementById("phoneNumber-field")
+      .value.trim();
     const email = document.getElementById("email-field").value.trim();
-    const password_currently = document.getElementById("password-currently-field").value.trim();
-    const password_new = document.getElementById("password-new-field").value.trim();
-    const password_confirm = document.getElementById("password-confirm-field").value.trim();
+    const password_currently = document
+      .getElementById("password-currently-field")
+      .value.trim();
+    const password_new = document
+      .getElementById("password-new-field")
+      .value.trim();
+    const password_confirm = document
+      .getElementById("password-confirm-field")
+      .value.trim();
 
     // Xác thực dữ liệu đầu vào
-    if (!fullName || !phoneNumber || !email || !password_currently || !password_new || !password_confirm) {
+    if (
+      !fullName ||
+      !phoneNumber ||
+      !email ||
+      !password_currently ||
+      !password_new ||
+      !password_confirm
+    ) {
       alert("Vui lòng điền đầy đủ thông tin!");
       return;
     }
@@ -99,36 +116,61 @@ async function handleUpdateInfor() {
 
     // Gửi yêu cầu tới API
     const response = await fetch("http://localhost:8080/user/update-infor", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            "userID": id_cus,  // ID người dùng
-            "fullName": fullName, // Tên đầy đủ
-            "phoneNumber": phoneNumber, // Số điện thoại
-            "email": email, // Email
-            "password": password_currently, // Mật khẩu hiện tại
-            "newPassword": password_new, // Mật khẩu mới
-        }),
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // Gửi token trong header
+      },
+      body: JSON.stringify({
+        userID: id_cus, // ID người dùng
+        fullName: fullName, // Tên đầy đủ
+        phoneNumber: phoneNumber, // Số điện thoại
+        email: email, // Email
+        password: password_currently, // Mật khẩu hiện tại
+        newPassword: password_new, // Mật khẩu mới
+      }),
     });
 
     if (response.ok) {
-        alert("Cập nhật thông tin thành công!"); // Thông báo cho người dùng
-        location.reload(true); // Reload lại trang sau khi cập nhật
+      alert("Cập nhật thông tin thành công!"); // Thông báo cho người dùng
+      location.reload(true); // Reload lại trang sau khi cập nhật
     } else {
-        // Nếu xảy ra lỗi từ server
-        alert(`Cập nhật thất bại: ${errorData.message || "Lỗi không xác định!"}`);
-        location.reload(); // Reload trang sau khi cập nhật 
+      // Nếu xảy ra lỗi từ server
+      alert(`Cập nhật thất bại: ${errorData.message || "Lỗi không xác định!"}`);
+      location.reload(); // Reload trang sau khi cập nhật
     }
-} catch (error) {
+  } catch (error) {
     // Xử lý lỗi không mong muốn
     console.error("Lỗi khi cập nhật thông tin:", error);
     alert("Đã xảy ra lỗi. Vui lòng thử lại!");
-    location.reload(); // Reload trang sau khi cập nhật 
-} 
+    location.reload(); // Reload trang sau khi cập nhật
+  }
 }
 
 // Gọi hàm để lấy thông tin tài khoản
-fetchUserInfo();
+function isTokenExpired(tk) {
+  try {
+    // Giải mã payload từ JWT
+    const currentTime = Math.floor(Date.now() / 1000); // Thời gian hiện tại (giây)
+    return tk.exp < currentTime; // true nếu token đã hết hạn
+  } catch (e) {
+    console.error("Token không hợp lệ:", e);
+    return true; // Token không hợp lệ
+  }
+}
 
+function checkTokenAndRedirect() {
+  // Kiểm tra nếu token không tồn tại hoặc đã hết hạn
+  if (!tokenRequest || isTokenExpired(tokenRequest)) {
+    alert("Phiên đăng nhập không hợp lệ. Vui lòng đăng nhập lại.");
+    localStorage.removeItem("isLoggedIn"); // Trạng thái đăng nhập
+    localStorage.removeItem("userRole"); // Vai trò người dùng
+    localStorage.removeItem("authToken"); // Token xác thực
+    localStorage.removeItem("id-user"); // ID người dùng
+    localStorage.removeItem("id-customer"); // ID khách hàng
+    localStorage.removeItem("id-cart"); // ID giỏ hàng
+    window.location.href = "/login.html"; // Chuyển hướng đến trang login
+  }
+}
+fetchUserInfo();
+checkTokenAndRedirect();

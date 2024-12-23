@@ -1,5 +1,6 @@
 package com.example.ProjectLaptopStore.Repository;
 
+import com.example.ProjectLaptopStore.DTO.Order_AdminOrders;
 import com.example.ProjectLaptopStore.Repository.Custom.OrderRepositoryCustom;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -50,5 +51,6 @@ public interface OrderRepository extends JpaRepository<OrdersEntity, Integer> , 
     @Query(value = "SELECT o.OrderID FROM Orders o WHERE o.CustomerID = :customerID",nativeQuery = true)
     List<Integer> findOrderIDByCustomerID(@Param("customerID") int customerID);
 
-
+    @Query(value = "SELECT * FROM Orders", nativeQuery = true)
+    List<OrdersEntity> findAllOrders();
 }

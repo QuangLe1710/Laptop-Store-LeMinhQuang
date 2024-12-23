@@ -89,5 +89,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
     // Thêm các xử lý ngoại lệ khác nếu cần
-
+    @ExceptionHandler(QuantityExceedsStockException.class)
+    public ResponseEntity<String> handleQuantityExceedsStockException(QuantityExceedsStockException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 }

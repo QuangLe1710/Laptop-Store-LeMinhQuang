@@ -10,53 +10,107 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="assets/styles/TableCustomer.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="icon" href="../assets/picture/logolmain.png" type="image/png" />
+
   </head>
-  <body>
-    <div class="d-flex" id="wrapper">
+  <body class="bg-light">
+    <div class="d-flex justify-content-between" id="wrapper">
       <!-- Sidebar Menu -->
-      <div class="bg-dark text-white" id="sidebar">
-        <div class="sidebar-header p-4">
+      <div
+        class="bg-dark text-white mx-3 rounded-4 mt-3"
+        id="sidebar"
+        style="width: 18vw; height: 95vh"
+      >
+        <div class="sidebar-header p-4 rounded-top-4">
           <h4>Dashboard</h4>
         </div>
         <ul class="nav flex-column p-2">
           <li class="nav-item">
-            <a class="nav-link text-white" href="Dashboard.html" id="dashboardLink">Dashboard</a>
+            <a
+              class="nav-link text-white"
+              href="Dashboard.html"
+              id="dashboardLink"
+            >
+              <div><i class="bi bi-building-fill-dash me-2"></i>Dashboard</div>
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-white" href="TableCustomer.html" id="customerTableLink">Table Customer</a>
+            <a
+              class="nav-link text-white"
+              href="TableCustomer.html"
+              id="customerTableLink"
+              ><i class="bi bi-person-gear me-2 fs-5"></i>Quản lý người dùng</a
+            >
           </li>
           <li class="nav-item">
-            <a class="nav-link text-white" href="TableProduct.html" id="productTableLink">Table Product</a>
+            <a
+              class="nav-link text-white"
+              href="TableProduct.html"
+              id="productTableLink"
+              ><i class="bi bi-table me-2"></i>Quản lý sản phẩm</a
+            >
           </li>
           <li class="nav-item">
-            <a class="nav-link text-white" href="EmployeesManage.html" id="employeesTableLink">Table EmployeesManage</a>
+            <a
+              class="nav-link text-white"
+              href="EmployeesManage.html"
+              id="employeesTableLink"
+              ><i class="bi bi-table me-2"></i>Quản lý nhân viên</a
+            >
           </li>
           <li class="nav-item">
-            <a class="nav-link text-white" href="TableSupplier.html" id="supplierTableLink">Table Supplier</a>
+            <a
+              class="nav-link text-white"
+              href="TableSupplier.html"
+              id="supplierTableLink"
+              ><i class="bi bi-buildings me-2"></i>Quản lý nhà cung cấp</a
+            >
           </li>
           <li class="nav-item">
-            <a class="nav-link text-white" href="Bill.html" id="billLink">Bill</a>
+            <a class="nav-link text-white" href="Bill.html" id="billLink"
+              ><i class="bi bi-receipt-cutoff me-2"></i>Quản lý Bill</a
+            >
           </li>
           <li class="nav-item">
-            <a class="nav-link text-white" href="WareHouse.html" id="warehouseLink">Warehouse</a>
+            <a
+              class="nav-link text-white"
+              href="WareHouse.html"
+              id="warehouseLink"
+              ><i class="bi bi-box-seam-fill me-2"></i>Quản lý kho</a
+            >
           </li>
           <li class="nav-item">
-            <a class="nav-link text-white" href="Promotion.html" id="PromotionLink">Promotion</a>
+            <a
+              class="nav-link text-white"
+              href="Promotion.html"
+              id="PromotionLink"
+              ><i class="bi bi-percent me-2"></i>Quản lý khuyến mãi</a
+            >
           </li>
           <li class="nav-item">
-            <a class="nav-link text-white" href="ProfileAdmin.html" id="profileLink">Profile</a>
+            <a
+              class="nav-link text-white"
+              href="ProfileAdmin.html"
+              id="profileLink"
+              ><i class="bi bi-person-lines-fill me-2"></i>Profile</a
+            >
           </li>
           <li class="nav-item">
-            <a class="nav-link text-white" href="AboutUs.html" id="profileLink">About Us</a>
+            <a class="nav-link text-white" href="AboutUs.html" id="profileLink"
+              ><i class="bi bi-info-circle me-2"></i>About Us</a
+            >
           </li>
           <li class="nav-item">
-            <a class="nav-link text-white" href="#" id="log-out">Đăng xuất</a>
+            <a class="nav-link text-white" href="#" id="log-out"
+              ><i class="bi bi-box-arrow-right me-2"></i>Đăng xuất</a
+            >
           </li>
         </ul>
       </div>
     </div>
      <!-- Content -->
-<div class="containers mt-5" id="content-area">
+<div class="containers mt-5" id="content-area" style="padding-left: 70px;">
   <h1 class="text-center rounded bg-primary text-white py-3 px-4 shadow">TABLE CUSTOMER</h1>
 
   
@@ -96,7 +150,7 @@
   
       <div class="col-md-7">
         <h4 class="custom-header">Danh Sách Khách Hàng</h4>
-        <button class="btn btn-primary" id="add-customer-btn">Thêm Khách Hàng</button>
+        <button id="add-customer-btn"></button>
                   <!-- Modal Thêm Khách Hàng -->
                   <div class="modal fade" id="addCustomerModal" tabindex="-1" aria-labelledby="addCustomerModalLabel" aria-hidden="true">
                     <div class="modal-dialog">

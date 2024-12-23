@@ -1,35 +1,62 @@
-document.addEventListener('DOMContentLoaded', function () {
-    // Lấy ProductID từ URL
-    const params = new URLSearchParams(window.location.search);
-    const productId = params.get('id'); // Lấy giá trị của tham số id từ URL
-    const apiUrl = `http://localhost:8080/user/product?id=${productId}`;
-    if (productId) {
-      // Gọi API để lấy tất cả sản phẩm
-      fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-          // Tìm sản phẩm có ProductID khớp với giá trị từ URL
-          const product = data[0];
-          console.log('thông tin sản phẩm ', product);
-          displayProductDetails(product);
-          displayProductDescriptions(product)
-        })
-        .catch(error => console.error('Error fetching product details:', error));
-    }
-  }); // Đóng hàm addEventListener
-  
-
-function displayProductDetails(product) {
-    document.getElementById('product-name').textContent = product.productName;
-    document.getElementById('product-name-breadcrumb').textContent = product.productName; // Hiển thị tên trong breadcrumb
-    document.getElementById('product-image').src = product.imageUrl;
-    document.getElementById('product-status').textContent = "Tình Trạng: Còn hàng"; // Sửa lại id ở đây
-    document.getElementById('product-price').textContent = `Giá: ${(product.price).toLocaleString('vi-VN')} VND`;
+document.addEventListener("DOMContentLoaded", function () {
+  // Lấy ProductID từ URL
+  const params = new URLSearchParams(window.location.search);
+  const productId = params.get("id"); // Lấy giá trị của tham số id từ URL
+  const apiUrl = `http://localhost:8080/user/product?id=${productId}`;
+  if (productId) {
+    // Gọi API để lấy tất cả sản phẩm
+    fetch(apiUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        // Tìm sản phẩm có ProductID khớp với giá trị từ URL
+        const product = data[0];
+        console.log("thông tin sản phẩm ", product);
+        displayProductDetails(product);
+        displayProductDescriptions(product);
+      })
+      .catch((error) =>
+        console.error("Error fetching product details:", error)
+      );
   }
+}); // Đóng hàm addEventListener
+
+function str(product) {
+  return (
+    "Laptop " +
+    product.productName +
+    " " +
+    product.cpuType +
+    " " +
+    product.ramCapacity +
+    "GB " +
+    product.capacity +
+    "GB " +
+    product.screenSize +
+    '"FDH ' +
+    product.os
+  );
+}
+function displayProductDetails(product) {
+  var soluong;
+  if (product.stockQuantity <= 0) {
+    soluong = "Hết hàng";
+  } else {
+    soluong = "Còn hàng";
+  }
+  document.getElementById("product-name").textContent = str(product);
+  document.getElementById("product-name-breadcrumb").textContent =
+    product.productName + " " + product.cpuType; // Hiển thị tên trong breadcrumb
+  document.getElementById("product-image").src = product.imageUrl;
+  document.getElementById("product-status").textContent =
+    "Tình Trạng: " + soluong; // Sửa lại id ở đây
+  document.getElementById(
+    "product-price"
+  ).textContent = `Giá: ${product.price.toLocaleString("vi-VN")} VND`;
+}
 
 function displayProductDescriptions(productDescription) {
-    const tableBody = document.querySelector('#highlight-specs tbody');
-    tableBody.innerHTML = '';
+  const tableBody = document.querySelector("#highlight-specs tbody");
+  tableBody.innerHTML = "";
 
   // Thêm các thông số vào bảng
   tableBody.innerHTML += `
@@ -50,41 +77,41 @@ function displayProductDescriptions(productDescription) {
       <td>${productDescription.screenSize} inch</td>
     </tr>
   `;
-    const specsTable = document.getElementById('all-specs');
-            specsTable.innerHTML = ''; // Xóa nội dung cũ
+  const specsTable = document.getElementById("all-specs");
+  specsTable.innerHTML = ""; // Xóa nội dung cũ
 
-            // Tạo các hàng trong bảng với thông tin sản phẩm
-            specsTable.innerHTML += `
+  // Tạo các hàng trong bảng với thông tin sản phẩm
+  specsTable.innerHTML += `
                 <tr class="section-title" data-toggle="cpu">
-                    <td colspan="2" style="font-weight: bold; cursor: pointer;">
+                    <td colspan="2" style="font-weight: bold; cursor: pointer;background-color:#bdc3c7;">
                         Bộ xử lý <span class="arrow" data-direction="down">▼</span>
                     </td>
                 </tr>
-                <tr class="cpu hidden">
+                <tr class="">
                     <td>Hãng CPU</td>
                     <td>${productDescription.cpuCompany}</td>
                 </tr>
-                <tr class="cpu hidden">
+                <tr class="">
                     <td>Công nghệ CPU</td>
                     <td>${productDescription.cpuTechnology}</td>
                 </tr>
-                <tr class="cpu hidden">
+                <tr class="">
                     <td>Loại CPU</td>
                     <td>${productDescription.cpuType}</td>
                 </tr>
-                <tr class="cpu hidden">
+                <tr class="">
                     <td>Tốc độ CPU (tối thiểu)</td>
                     <td>${productDescription.minimumCPUspeed} GHz</td>
                 </tr>
-                <tr class="cpu hidden">
+                <tr class="">
                     <td>Tốc độ CPU (tối đa)</td>
                     <td>${productDescription.maximunSpeed} GHz</td>
                 </tr>
-                <tr class="cpu hidden">
+                <tr class="">
                     <td>Nhân CPU</td>
                     <td>${productDescription.multiplier} GHz</td>
                 </tr>
-                 <tr class="cpu hidden">
+                 <tr class="">
                     <td>Bộ nhớ đệm</td>
                     <td>${productDescription.processorCache} GHz</td>
                 </tr>
@@ -93,26 +120,26 @@ function displayProductDescriptions(productDescription) {
 
                  <!-- Mục Đồ họa -->
                 <tr class="section-title" data-toggle="graphics">
-                    <td colspan="2" style="font-weight: bold; cursor: pointer;">
+                    <td colspan="2" style="font-weight: bold; cursor: pointer;background-color:#bdc3c7;">
                         Đồ họa <span class="arrow" data-direction="down">▼</span>
                     </td>
                 </tr> 
 
-                <tr class="graphics hidden">
+                <tr class="">
                     <td>Hãng (Card Oboard)</td>
                     <td>${productDescription.brandCardOboard}</td>
                 </tr>
 
-                <tr class="graphics hidden">
+                <tr class="">
                     <td>Model (Card Oboard)</td>
                     <td>${productDescription.modelCardOboard}</td>
                 </tr>
 
-                <tr class="graphics hidden">
+                <tr class="">
                     <td>Tên đầy đủ (Card onbroad)</td>
                     <td>${productDescription.fullNameCardOboard}</td>
                 </tr>
-                <tr class="graphics hidden">
+                <tr class="">
                     <td>Card VGA</td>
                     <td>${productDescription.vgaFullName}</td>
                 </tr>
@@ -121,66 +148,66 @@ function displayProductDescriptions(productDescription) {
 
                 <!-- Mục RAM -->
                 <tr class="section-title" data-toggle="ram">
-                    <td colspan="2" style="font-weight: bold; cursor: pointer;">
+                    <td colspan="2" style="font-weight: bold; cursor: pointer;background-color:#bdc3c7;">
                         RAM <span class="arrow" data-direction="down">▼</span>
                     </td>
                 </tr>
-                <tr class="ram hidden">
+                <tr class="">
                     <td>Dung lượng RAM</td>
                     <td>${productDescription.ramCapacity} GB</td>
                 </tr>
-                <tr class="ram hidden">
+                <tr class="">
                     <td>Loại RAM</td>
                     <td>${productDescription.ramType}</td>
                 </tr>
-                <tr class="ram hidden">
+                <tr class="">
                     <td>Tốc độ RAM</td>
                     <td>${productDescription.ramSpeed}</td>
                 </tr>
 
 
-                 <tr class="ram hidden">
+                 <tr class="">
                     <td>Số khe cắm rời</td>
                     <td>${productDescription.numberOfRemovableSlots} </td>
                 </tr>
 
-                <tr class="ram hidden">
+                <tr class="">
                     <td>Số RAM onboard</td>
                     <td>${productDescription.numberOfOnboardRAM} </td>
                 </tr>
 
-                <tr class="ram hidden">
+                <tr class="">
                     <td>Hỗ trợ RAM tối đa</td>
                     <td>${productDescription.maximumRAMSupport} GB </td>
                 </tr>
 
                 <!-- Mục Lưu trữ -->
                 <tr class="section-title" data-toggle="storage">
-                    <td colspan="2" style="font-weight: bold; cursor: pointer;">
+                    <td colspan="2" style="font-weight: bold; cursor: pointer;background-color:#bdc3c7;">
                         Lưu trữ <span class="arrow" data-direction="down">▼</span>
                     </td>
                 </tr>
-                <tr class="storage hidden">
+                <tr class="">
                     <td>Kiểu ổ cứng</td>
                     <td>${productDescription.hardDriveType}</td>
                 </tr>
 
-                <tr class="storage hidden">
+                <tr class="">
                     <td>Kiểu ổ cứng</td>
                     <td>${productDescription.totalSSDHDDSlots}</td>
                 </tr>
 
-                <tr class="storage hidden">
+                <tr class="">
                     <td>Số khe SSD/HDD còn lại</td>
                     <td>${productDescription.numberOfSSDHDDSlotsRemaining}</td>
                 </tr>
 
-                <tr class="storage hidden">
+                <tr class="">
                     <td>Dung lượng nâng cấp tối đa ổ cứng</td>
                     <td>${productDescription.maximumHardDriveUpgradeCapacity}</td>
                 </tr>
 
-                <tr class="storage hidden">
+                <tr class="">
                     <td>Dung lượng ổ cứng</td>
                     <td>${productDescription.capacity} GB</td>
                 </tr>
@@ -188,268 +215,269 @@ function displayProductDescriptions(productDescription) {
 
                 <!-- Mục Màn hình -->
                 <tr class="section-title" data-toggle="screen">
-                    <td colspan="2" style="font-weight: bold; cursor: pointer;">
+                    <td colspan="2" style="font-weight: bold; cursor: pointer;background-color:#bdc3c7;">
                         Màn hình <span class="arrow" data-direction="down">▼</span>
                     </td>
                 </tr>
-                <tr class="screen hidden">
+                <tr class="">
                     <td>Kích thước màn hình</td>
                     <td>${productDescription.screenSize} inch</td>
                 </tr>
-                <tr class="screen hidden">
+                <tr class="">
                     <td>Công nghệ màn hình</td>
                     <td>${productDescription.displayTechnology}</td>
                 </tr>
-                <tr class="screen hidden">
+                <tr class="">
                     <td>Độ phân giải</td>
                     <td>${productDescription.resolution}</td>
                 </tr>
                
 
-                <tr class="screen hidden">
+                <tr class="">
                     <td>Loại màn hình</td>
                     <td>${productDescription.screenType}</td>
                 </tr>
 
-                <tr class="screen hidden">
+                <tr class="">
                     <td>Tần số quét</td>
                     <td>${productDescription.scanningFrequency}</td>
                 </tr>
 
                 
-                <tr class="screen hidden">
+                <tr class="">
                     <td>Tấm nền</td>
                     <td>${productDescription.basePlate}</td>
                 </tr>
 
-                <tr class="screen hidden">
+                <tr class="">
                     <td>Độ sáng</td>
                     <td>${productDescription.brightness}</td>
                 </tr>
 
-                <tr class="screen hidden">
+                <tr class="">
                     <td>Độ phủ màu</td>
                     <td>${productDescription.colorCoverage}</td>
                 </tr>
 
-                <tr class="screen hidden">
+                <tr class="">
                     <td>Tỷ lệ màn hình</td>
                     <td>${productDescription.screenRatio}</td>
                 </tr>
 
                 <!-- Mục Giao tiếp và kết nối -->
                 <tr class="section-title" data-toggle="connectivity">
-                    <td colspan="2" style="font-weight: bold; cursor: pointer;">
+                    <td colspan="2" style="font-weight: bold; cursor: pointer;background-color:#bdc3c7;">
                         Giao tiếp và kết nối <span class="arrow" data-direction="down">▼</span>
                     </td>
                 </tr>
-                <tr class="connectivity hidden">
+                <tr class="">
                     <td>Cổng giao tiếp</td>
                     <td>${productDescription.communicationPort}</td>
                 </tr>
-                <tr class="connectivity hidden">
+                <tr class="">
                     <td>Wi-Fi</td>
                     <td>${productDescription.wifi}</td>
                 </tr>
-                <tr class="connectivity hidden">
+                <tr class="">
                     <td>Bluetooth</td>
                     <td>${productDescription.bluetooth}</td>
                 </tr>
 
-                <tr class="connectivity hidden">
+                <tr class="">
                     <td>Webcam</td>
                     <td>${productDescription.webcam}</td>
                 </tr>
 
                 <!-- Mục Hệ điều hành -->
                 <tr class="section-title" data-toggle="os">
-                    <td colspan="2" style="font-weight: bold; cursor: pointer;">
+                    <td colspan="2" style="font-weight: bold; cursor: pointer;background-color:#bdc3c7;">
                         Hệ điều hành <span class="arrow" data-direction="down">▼</span>
                     </td>
                 </tr>
-                <tr class="os hidden">
+                <tr class="">
                     <td>Tên hệ điều hành</td>
                     <td>${productDescription.os}</td>
                 </tr>
-                <tr class="os hidden">
+                <tr class="">
                     <td>Version</td>
                     <td>${productDescription.version}</td>
                 </tr>
 
                 <!-- Mục Bảo mật -->
                 <tr class="section-title" data-toggle="security">
-                    <td colspan="2" style="font-weight: bold; cursor: pointer;">
+                    <td colspan="2" style="font-weight: bold; cursor: pointer;background-color:#bdc3c7;">
                         Bảo mật <span class="arrow" data-direction="down">▼</span>
                     </td>
                 </tr>
-                <tr class="security hidden">
+                <tr class="">
                     <td>Bảo mật hệ thống</td>
                     <td>${productDescription.security}</td>
                 </tr>
 
                 <!-- Mục  Bàn phím & TouchPad -->
                 <tr class="section-title" data-toggle="Keyboard-TouchPad">
-                    <td colspan="2" style="font-weight: bold; cursor: pointer;">
+                    <td colspan="2" style="font-weight: bold; cursor: pointer;background-color:#bdc3c7;">
                         Bàn phím & TouchPad <span class="arrow" data-direction="down">▼</span>
                     </td>
                 </tr>
 
-                <tr class="Keyboard-TouchPad hidden">
+                <tr class="">
                     <td>Kiểu bàn phím</td>
                     <td>${productDescription.keyboardType}</td>
                 </tr>
 
-                <tr class="Keyboard-TouchPad hidden">
+                <tr class="">
                     <td>Bàn phím số</td>
                     <td>${productDescription.numericKeypad}</td>
                 </tr>
 
-                <tr class="Keyboard-TouchPad hidden">
+                <tr class="">
                     <td>Đèn bàn phím</td>
                     <td>${productDescription.keyboardLight}</td>
                 </tr>
 
-                 <tr class="Keyboard-TouchPad hidden">
+                 <tr class="">
                     <td>TouchPad</td>
                     <td>${productDescription.touchPad}</td>
                 </tr>
 
                 <!-- Mục  Thông tin pin & sạc -->
                 <tr class="section-title" data-toggle="Battery-charging">
-                    <td colspan="2" style="font-weight: bold; cursor: pointer;">
+                    <td colspan="2" style="font-weight: bold; cursor: pointer;background-color:#bdc3c7;">
                         Thông tin pin & sạc<span class="arrow" data-direction="down">▼</span>
                     </td>
                 </tr>
 
-                <tr class="Battery-charging hidden">
+                <tr class="">
                     <td>Loại pin</td>
                     <td>${productDescription.batteryType}</td>
                 </tr>
 
-                 <tr class="Battery-charging hidden">
+                 <tr class="">
                     <td>Dung lượng pin</td>
                     <td>${productDescription.batteryCapacity} mAh</td>
                 </tr>
 
-                 <tr class="Battery-charging hidden">
+                 <tr class="">
                     <td>Power Supply</td>
                     <td>${productDescription.powerSupply}</td>
                 </tr>
 
                 <!-- Mục Phụ kiện trong hộp -->
                 <tr class="section-title" data-toggle="Accessories-in-the-box">
-                    <td colspan="2" style="font-weight: bold; cursor: pointer;">
+                    <td colspan="2" style="font-weight: bold; cursor: pointer;background-color:#bdc3c7;">
                         Phụ kiện trong hộp <span class="arrow" data-direction="down">▼</span>
                     </td>
                 </tr>
-                <tr class="Accessories-in-the-box hidden">
+                <tr class="">
                     <td>Phụ kiện trong hộp</td>
                     <td>${productDescription.accessoriesInTheBox}</td>
                 </tr>
 
                 <!-- Mục Thiết kế và trọng lượng -->
                 <tr class="section-title" data-toggle="Design-weight">
-                    <td colspan="2" style="font-weight: bold; cursor: pointer;">
+                    <td colspan="2" style="font-weight: bold; cursor: pointer;background-color:#bdc3c7;">
                         Thiết kế và trọng lượng <span class="arrow" data-direction="down">▼</span>
                     </td>
                 </tr>
-                <tr class="Design-weight hidden">
+                <tr class="">
                     <td>Kích thước</td>
                     <td>${productDescription.size}</td>
                 </tr>
 
-                <tr class="Design-weight hidden">
+                <tr class="">
                     <td>Trọng lượng sản phẩm</td>
                     <td>${productDescription.productWeight}</td>
                 </tr>
 
-                <tr class="Design-weight hidden">
+                <tr class="">
                     <td>Chất liệu</td>
                     <td>${productDescription.material}</td>
                 </tr>
 
                 <!-- Mục Thông tin hàng hóa -->
                 <tr class="section-title" data-toggle="product-info">
-                    <td colspan="2" style="font-weight: bold; cursor: pointer;">
+                    <td colspan="2" style="font-weight: bold; cursor: pointer;background-color:#bdc3c7;">
                         Thông tin hàng hóa <span class="arrow" data-direction="down">▼</span>
                     </td>
                 </tr>
-                <tr class="product-info hidden">
+                <tr class="">
                     <td>P/N</td>
                     <td>${productDescription.pnProductCode}</td>
                 </tr>
 
-                <tr class="product-info hidden">
+                <tr class="">
                     <td>Xuất xứ</td>
                     <td>${productDescription.origin}</td>
                 </tr>
-                <tr class="product-info hidden">
+                <tr class="">
                     <td>Thời gian bảo hành</td>
                     <td>${productDescription.warrantyPeriodMonths} tháng</td>
                 </tr>
 
-                <tr class="product-info hidden">
+                <tr class="">
                     <td>Hướng dẫn bảo quản</td>
                     <td>${productDescription.storageInstructions} </td>
                 </tr>
-                <tr class="product-info hidden">
+                <tr class="">
                     <td>Hướng dẫn sử dụng</td>
                     <td>${productDescription.userManual} </td>
                 </tr>
-                <tr class="product-info hidden">
+                <tr class="">
                     <td>Màu sắc</td>
                     <td>${productDescription.color}</td>
                 </tr>
             `;
+}
+
+// Hàm để hiển thị thông số nổi bật
+function showHighlightSpecs() {
+  console.log("showHighlightSpecs called"); // Ghi log khi gọi hàm
+  document.getElementById("highlight-specs").classList.remove("hidden");
+  document.getElementById("all-specs").classList.add("hidden");
+  document.getElementById("highlight-btn").classList.add("active");
+  document.getElementById("all-spec-btn").classList.remove("active");
+}
+
+// Hàm để hiển thị tất cả thông số
+function showAllSpecs() {
+  console.log("showAllSpecs called"); // Ghi log khi gọi hàm
+  document.getElementById("all-specs").classList.remove("hidden");
+  document.getElementById("highlight-specs").classList.add("hidden");
+  document.getElementById("all-spec-btn").classList.add("active");
+  document.getElementById("highlight-btn").classList.remove("active");
+}
+
+// Thêm sự kiện click cho các nút hiển thị
+document.addEventListener("DOMContentLoaded", () => {
+  document
+    .getElementById("highlight-btn")
+    .addEventListener("click", showHighlightSpecs);
+  document
+    .getElementById("all-spec-btn")
+    .addEventListener("click", showAllSpecs);
+
+  // Mặc định hiển thị thông số nổi bật khi tải trang
+  showHighlightSpecs(); // Gọi hàm để hiển thị thông số nổi bật
+});
+
+document.addEventListener("click", function (event) {
+  if (event.target.closest(".section-title")) {
+    const section = event.target.closest(".section-title");
+    const sectionClass = section.getAttribute("data-toggle");
+    const rows = document.querySelectorAll(`.${sectionClass}`);
+    const arrow = section.querySelector(".arrow");
+
+    // Ẩn/hiện các hàng có liên quan
+    rows.forEach((row) => row.classList.toggle("hidden"));
+
+    // Đổi mũi tên
+    if (arrow.getAttribute("data-direction") === "down") {
+      arrow.textContent = "▲";
+      arrow.setAttribute("data-direction", "up");
+    } else {
+      arrow.textContent = "▼";
+      arrow.setAttribute("data-direction", "down");
+    }
   }
-
- // Hàm để hiển thị thông số nổi bật
-        function showHighlightSpecs() {
-            console.log("showHighlightSpecs called"); // Ghi log khi gọi hàm
-            document.getElementById('highlight-specs').classList.remove('hidden');
-            document.getElementById('all-specs').classList.add('hidden');
-            document.getElementById('highlight-btn').classList.add('active');
-            document.getElementById('all-spec-btn').classList.remove('active');
-        }
-
-        // Hàm để hiển thị tất cả thông số
-        function showAllSpecs() {
-            console.log("showAllSpecs called"); // Ghi log khi gọi hàm
-            document.getElementById('all-specs').classList.remove('hidden');
-            document.getElementById('highlight-specs').classList.add('hidden');
-            document.getElementById('all-spec-btn').classList.add('active');
-            document.getElementById('highlight-btn').classList.remove('active');
-        }
-
-        // Thêm sự kiện click cho các nút hiển thị
-        document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('highlight-btn').addEventListener('click', showHighlightSpecs);
-            document.getElementById('all-spec-btn').addEventListener('click', showAllSpecs);
-
-          // Mặc định hiển thị thông số nổi bật khi tải trang
-          showHighlightSpecs(); // Gọi hàm để hiển thị thông số nổi bật
-        });
-
-        document.addEventListener('click', function (event) {
-          if (event.target.closest('.section-title')) {
-              const section = event.target.closest('.section-title');
-              const sectionClass = section.getAttribute('data-toggle');
-              const rows = document.querySelectorAll(`.${sectionClass}`);
-              const arrow = section.querySelector('.arrow');
-
-              // Ẩn/hiện các hàng có liên quan
-              rows.forEach(row => row.classList.toggle('hidden'));
-
-              // Đổi mũi tên
-              if (arrow.getAttribute('data-direction') === 'down') {
-                  arrow.textContent = '▲';
-                  arrow.setAttribute('data-direction', 'up');
-              } else {
-                  arrow.textContent = '▼';
-                  arrow.setAttribute('data-direction', 'down');
-              }
-          }
-      });
-        
-
-
+});

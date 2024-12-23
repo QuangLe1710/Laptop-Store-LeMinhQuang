@@ -1,18 +1,22 @@
 package com.example.ProjectLaptopStore.Controller;
 
 import com.example.ProjectLaptopStore.DTO.*;
+import com.example.ProjectLaptopStore.Entity.OrdersEntity;
 import com.example.ProjectLaptopStore.Entity.ProductsEntity;
 import com.example.ProjectLaptopStore.Entity.SuppliersEntity;
 import com.example.ProjectLaptopStore.Entity.WareHouseEntity;
+import com.example.ProjectLaptopStore.Repository.OrderRepository;
 import com.example.ProjectLaptopStore.Response.*;
 import com.example.ProjectLaptopStore.Service.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 //Lớp kiểm soát api của role admin
 @RestController
@@ -42,6 +46,11 @@ public class AdminController {
     private SuppliersService suppliersService;
     @Autowired
     private ProductInWareHouseService productInWarehouseService;
+    @Autowired
+    private OrderRepository orderRepository;
+    @Autowired
+    private ModelMapper modelMapper;
+
     //API cho trang dashboard
     @Operation(summary = "Get dashboard data for admin")
     //thông báo lỗi cụ thể trên công cụ test
@@ -295,5 +304,19 @@ public class AdminController {
     public ResponseEntity<?> deleteEmployee(@PathVariable(name = "id") Integer id){
         employeesService.deleteEmployee(id);
         return  ResponseEntity.ok("success");
+    }
+
+    @Autowired
+    private OrderService orderService;
+    @PutMapping(value = "/orders-status")
+    public ResponseEntity<?> getListOrder(@RequestParam(name = "id")int id,
+                             @RequestParam(name = "status")String status){
+        orderService.upateOrderStatus(id, status);
+        return  ResponseEntity.ok("success");
+    }
+    @GetMapping(value = "/orders")
+    public List<Order_AdminOrders> getListOrders(){
+        List<Order_AdminOrders> rs = orderService.ListAdminOrders();
+        return rs;
     }
 }

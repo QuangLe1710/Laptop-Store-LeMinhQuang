@@ -26,4 +26,8 @@ public interface OrderService {
 
     // huy don hang
     void cancelOrder(int orderID);
+
+    void upateOrderStatus(int orderID, String status);
+
+    List<Order_AdminOrders> ListAdminOrders();
 }

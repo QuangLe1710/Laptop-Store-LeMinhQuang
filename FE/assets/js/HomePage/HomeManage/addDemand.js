@@ -25,7 +25,7 @@ function renderCustomerDemand(customerDemandData) {
 
     // Tạo phần tử HTML
     const demandItem = document.createElement("div");
-    demandItem.className = "col-3 d-flex justify-content-center align-items-center custom-grid-item";
+    demandItem.className = "col-3 d-flex justify-content-center align-items-center custom-grid-item bg-white";
     demandItem.setAttribute("data-id", key); // Gắn id vào data-id
 
     demandItem.innerHTML = `

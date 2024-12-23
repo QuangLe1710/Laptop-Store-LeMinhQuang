@@ -87,8 +87,9 @@ body {
 /* Menu user */
 .box-user {
   position: absolute;
-  top: 60px;
+  top: 42px;
   right: 0;
+  left: 55px;
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -203,11 +204,7 @@ body {
   display: flex;
 }
 
-
-
-
-.img-fluid-item1 img
-{
+.img-fluid-item1 img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -235,30 +232,29 @@ body {
 }
 /* Banner */
 
-  /* sanpham */
- 
+/* sanpham */
 
 /* Responsive */
 
 @media (max-width: 1200px) {
-    #featured-products .product-item {
-        flex: 0 0 calc(33.33% - 30px); /* 3 sản phẩm trên một hàng */
-        max-width: calc(33.33% - 30px);
-    }
+  #featured-products .product-item {
+    flex: 0 0 calc(25% - 30px); /* 3 sản phẩm trên một hàng */
+    max-width: calc(25% - 30px);
+  }
 }
 
 @media (max-width: 992px) {
-    #featured-products .product-item {
-        flex: 0 0 calc(50% - 30px); /* 2 sản phẩm trên một hàng */
-        max-width: calc(50% - 30px);
-    }
+  #featured-products .product-item {
+    flex: 0 0 calc(50% - 30px); /* 2 sản phẩm trên một hàng */
+    max-width: calc(50% - 30px);
+  }
 }
 
 @media (max-width: 768px) {
-    #featured-products .product-item {
-        flex: 0 0 calc(100% - 30px); /* 1 sản phẩm trên một hàng */
-        max-width: calc(100% - 30px);
-    }
+  #featured-products .product-item {
+    flex: 0 0 calc(100% - 30px); /* 1 sản phẩm trên một hàng */
+    max-width: calc(100% - 30px);
+  }
 }
 
 /* sanpham */
@@ -277,15 +273,14 @@ body {
 #regular-products-list {
   display: flex; /* Sử dụng flexbox */
   flex-wrap: wrap; /* Cho phép các sản phẩm xuống hàng */
-  gap: 20px; 
+  gap: 20px;
   padding: 20px 0; /* Khoảng cách trên và dưới */
-
 }
 
 /* Sản phẩm thường */
 .product-item {
   flex: 0 0 calc(30% - 25px); /* Mỗi sản phẩm chiếm 1/3 chiều rộng của hàng */
-  margin-bottom: 20px; /* Khoảng cách dưới mỗi sản phẩm */
+  width: 225px;
 }
 
 /* Sản phẩm nổi bật */
@@ -295,7 +290,8 @@ body {
 }
 
 /* Các thuộc tính chung cho sản phẩm */
-.product-item, .featured-item {
+.product-item,
+.featured-item {
   border: 1px solid #ddd; /* Đường viền nhạt bao quanh sản phẩm */
   border-radius: 10px; /* Bo góc cho sản phẩm */
   background-color: #fff; /* Nền trắng */
@@ -305,19 +301,19 @@ body {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
 }
 
-.product-item:hover, .featured-item:hover {
+.product-item:hover,
+.featured-item:hover {
   transform: scale(1.05); /* Phóng to sản phẩm khi hover */
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Đổ bóng mạnh hơn khi hover */
 }
 
 .product-link {
-
   text-decoration: none;
-  color: inherit; 
-  display: block; 
+  color: inherit;
+  display: block;
   padding: 10px;
   margin-bottom: 20px;
-  transition: transform 0.3s ease; 
+  transition: transform 0.3s ease;
 }
 
 .product-image img {
@@ -358,47 +354,42 @@ body {
   background-color: #0056b3;
 }
 
-
 /* san pham */
 
 /* mục slide theo hãng*/
 .carousel-item {
   padding: 5px;
- 
-  justify-content: center; 
-  gap: 20px; 
+
+  justify-content: center;
+  gap: 20px;
 }
 .carousel-item .col-3 {
   border: 1px solid black;
-  border-radius: 10px; 
-  padding: 10px; 
-  text-align: center; 
- 
-  
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+
   flex: 0 0 auto;
 }
 
-
 .carousel-item > div {
-  
   box-sizing: border-box;
-  text-align: center; 
- 
+  text-align: center;
 }
 
 .carousel-control-prev,
 .carousel-control-next {
-    width: 40px; 
-    height: 40px; 
-    background-color: transparent;
-    border: none; 
-    transition: background-color 0.3s; 
+  width: 40px;
+  height: 40px;
+  background-color: transparent;
+  border: none;
+  transition: background-color 0.3s;
 }
 
 .carousel-control-prev:hover,
 .carousel-control-next:hover {
-    background-color: black; 
-    border-radius: 50%; 
+  background-color: black;
+  border-radius: 50%;
 }
 
 /*  */
@@ -409,7 +400,7 @@ body {
   border-radius: 10px; /* Border-radius */
   padding: 10px; /* Khoảng cách bên trong */
   text-align: center; /* Căn giữa nội dung */
- 
+
   /* Thiết lập chiều rộng tối đa cho phần tử */
   flex: 0 0 auto;
   max-width: 270px;
@@ -439,13 +430,11 @@ body {
   justify-content: center;
   position: relative;
   overflow: hidden;
-  
 }
 
 .img-fluid-item1 {
   position: relative;
   width: 100%;
-  
 }
 
 .img-fluid-item1 img {
@@ -458,15 +447,15 @@ body {
   border-radius: 10px; /* Bo tròn góc */
 }
 
-.img-fluid-item1 img.show{
+.img-fluid-item1 img.show {
   display: block; /* Hiển thị ảnh đang được chọn */
   opacity: 1;
   border-color: #ff9800; /* Thay đổi màu viền ảnh khi được hiển thị */
 }
 
-
 /* Nút điều khiển */
-.prev, .next {
+.prev,
+.next {
   cursor: pointer; /* Thay đổi con trỏ khi di chuột qua */
   position: absolute; /* Để định vị nút điều khiển */
   top: 50%; /* Căn giữa theo chiều dọc */
@@ -491,7 +480,8 @@ body {
 }
 
 /* Khi di chuột vào nút điều khiển */
-.prev:hover, .next:hover {
+.prev:hover,
+.next:hover {
   background-color: rgba(0, 0, 0, 0.6); /* Màu nền khi hover */
 }
 
@@ -499,7 +489,6 @@ body {
 .img-fluid-item1 img {
   transition: opacity 0.5s ease; /* Hiệu ứng mờ dần */
 }
-
 
 /* Banner */
 
@@ -512,7 +501,6 @@ body {
   display: block; /* Hiển thị bộ lọc khi có class 'active' */
 }
 
-
 .filter_bar_item {
   position: relative;
   margin-right: 20px;
@@ -520,7 +508,6 @@ body {
 }
 
 .filter_bar_item span {
- 
   cursor: pointer;
   display: block;
   padding: 5px 15px;
@@ -582,7 +569,6 @@ body {
 /* footer */
 /* Định dạng chung cho footer */
 footer {
-  
   color: #050404;
   padding: 40px 0;
   font-size: 14px;
@@ -606,7 +592,8 @@ footer .container {
   color: #080807;
 }
 
-.footer-section p, .footer-section ul {
+.footer-section p,
+.footer-section ul {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -671,7 +658,7 @@ footer .container {
 
 @media (max-width: 768px) {
   footer .container {
-      flex-direction: column;
+    flex-direction: column;
   }
 }
 /* footer */
@@ -728,7 +715,6 @@ h2 {
   margin-top: 10px;
   padding-left: 20px;
   transition: max-height 0.2s ease; /* Thêm hiệu ứng chuyển động */
- 
 }
 
 .filter-group.active .filter-items {
@@ -770,35 +756,34 @@ input[type="checkbox"] {
 }
 
 .btn-primary:hover {
-  background-color: #db1010; 
+  background-color: #db1010;
 }
-
 
 /* Bộ lọc */
 
 /* Nút thêm so sánh */
 .compare-btn {
-  background-color: transparent; 
-  color: #000; 
-  border: none; 
+  background-color: transparent;
+  color: #000;
+  border: none;
   font-size: 16px;
-  font-weight: bold; 
-  cursor: pointer; 
-  display: block; 
-  align-items: center; 
-  margin-top: 10px; 
+  font-weight: bold;
+  cursor: pointer;
+  display: block;
+  align-items: center;
+  margin-top: 10px;
 }
 
 .compare-btn .icon-circle {
-  display: inline-flex; 
+  display: inline-flex;
   justify-content: center;
   align-items: center;
-  width: 30px; 
+  width: 30px;
   height: 30px;
-  background-color: #e3433b; 
+  background-color: #e3433b;
   color: white;
   border-radius: 50%;
-  font-size: 18px; 
+  font-size: 18px;
   margin-right: 10px;
   transition: background-color 0.3s ease;
 }
@@ -808,7 +793,7 @@ input[type="checkbox"] {
 }
 
 .compare-btn:focus {
-  outline: none; 
+  outline: none;
 }
 
 /* Nút thêm so sánh */
@@ -826,7 +811,7 @@ input[type="checkbox"] {
   left: 0;
   right: 0;
   height: 100px; /* Chiều cao của navbar */
-  display:none;
+  display: none;
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
@@ -856,11 +841,11 @@ input[type="checkbox"] {
   background-color: rgb(85, 231, 85);
   width: 120px;
   color: rgb(246, 244, 244);
-  border: none; 
-  border-radius: 5px; 
+  border: none;
+  border-radius: 5px;
   padding: 10px 15px;
   margin: 5px;
-  cursor: pointer; 
+  cursor: pointer;
   transition: background-color 0.3s;
 }
 
@@ -873,7 +858,7 @@ input[type="checkbox"] {
   background-color: rgb(235, 36, 25);
   width: 120px;
   color: rgb(246, 244, 244);
-  border: none; 
+  border: none;
   border-radius: 5px;
   padding: 10px 15px;
   margin: 5px;
@@ -912,10 +897,9 @@ input[type="checkbox"] {
   object-fit: cover;
   border-radius: 5px;
 }
-.compare-product-image{
+.compare-product-image {
   width: 90%;
   padding: 5px;
-  
 }
 .compare-product-info {
   margin-left: 10px;
@@ -924,7 +908,6 @@ input[type="checkbox"] {
 }
 
 .remove-btn {
- 
   background-color: red;
   color: white;
   border: none;

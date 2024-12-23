@@ -18,6 +18,7 @@ import com.nimbusds.jose.JOSEException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.NonFinal;
 import org.slf4j.Logger;
@@ -161,7 +162,7 @@ public class UserController {
 
     //API tao don hang moi
     @PutMapping(value = "/user/mycart/create-order")
-    public ResponseEntity<?> createOrder(@RequestBody OrderDTO dto){
+    public ResponseEntity<?> createOrder(@Valid @RequestBody OrderDTO dto){
         orderService.createOrder(dto);
         return ResponseEntity.ok("Order created successfully");
     }

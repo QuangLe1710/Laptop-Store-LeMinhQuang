@@ -10,19 +10,19 @@ async function register(event) {
 
   // Kiểm tra mật khẩu
   if (PassWord !== confirmPassword) {
-      alert("Mật khẩu không khớp. Vui lòng kiểm tra lại!");
-      return;
+    alert("Mật khẩu không khớp. Vui lòng kiểm tra lại!");
+    return;
   }
 
   // Chuẩn bị dữ liệu để gửi
   const RegisterDate = new Date().toISOString(); // Thời gian hiện tại theo chuẩn ISO 8601
   const userData = {
-      id: null,
-      fullName: fullname,
-      email: Email,
-      password: PassWord,
-      phoneNumber: PhoneNumber,
-      registerDate: RegisterDate
+    id: null,
+    fullName: fullname,
+    email: Email,
+    password: PassWord,
+    phoneNumber: PhoneNumber,
+    registerDate: RegisterDate,
   };
 
   // In dữ liệu gửi đi
@@ -33,9 +33,9 @@ async function register(event) {
     const response = await fetch("http://localhost:8080/register", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(userData)
+      body: JSON.stringify(userData),
     });
 
     if (response.ok) {
@@ -46,15 +46,14 @@ async function register(event) {
         console.log("Phản hồi JSON từ server:", result);
         alert(result.message || "Đăng ký thành công!");
       } else if (contentType && contentType.includes("text/plain")) {
-        const result = await response.text(); 
+        const result = await response.text();
         console.log("Phản hồi từ server:", result);
-        alert(result); 
+        alert(result);
       } else {
         alert("Định dạng phản hồi không được hỗ trợ.");
       }
-      window.location.href = "login.html"; 
+      window.location.href = "login.html";
     } else {
-      
       const error = await response.text(); // Đọc lỗi nếu phản hồi là text
       alert("Đăng ký thất bại: " + (error || "Vui lòng thử lại."));
     }

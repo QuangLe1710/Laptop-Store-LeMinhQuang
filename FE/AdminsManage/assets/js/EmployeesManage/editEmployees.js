@@ -1,4 +1,3 @@
-
 const apiUpDate = "http://localhost:8080/admin/employee/update/";
 
 async function updateEmployee(event) {
@@ -16,16 +15,17 @@ async function updateEmployee(event) {
     phoneNumber,
     password,
     status,
-    employeeId
+    employeeId,
   };
 
   try {
     const response = await fetch(`${apiUpDate}${employeeId}`, {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`, // Gửi token trong header
       },
-      body: JSON.stringify(employeeData)
+      body: JSON.stringify(employeeData),
     });
 
     if (!response.ok) {
@@ -33,17 +33,18 @@ async function updateEmployee(event) {
     }
 
     const responseText = await response.text();
-    
+
     if (responseText === "success") {
       alert("Cập nhật nhân viên thành công!");
       window.location.reload();
     } else {
       alert("Có lỗi khi cập nhật nhân viên!");
     }
-
   } catch (error) {
     console.error("Error updating employee:", error);
     alert("Cập nhật nhân viên thất bại!");
   }
 }
-document.getElementById("editEmployeeForm").addEventListener("submit", updateEmployee);
+document
+  .getElementById("editEmployeeForm")
+  .addEventListener("submit", updateEmployee);

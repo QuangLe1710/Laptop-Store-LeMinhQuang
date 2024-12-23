@@ -20,7 +20,7 @@ public class OrderDetailEntity implements Serializable {
     private int quantity;
     @Column(name = "Price", precision = 10, scale = 2,nullable = false)
     private BigDecimal price;
-    @Column(name = "LineTotal", precision = 10, scale = 2, insertable = false, updatable = false)
+    @Column(name = "LineTotal", precision = 12, scale = 2)
     private BigDecimal lineTotal;
     @ManyToOne
     @JoinColumn(name = "ProductID")
