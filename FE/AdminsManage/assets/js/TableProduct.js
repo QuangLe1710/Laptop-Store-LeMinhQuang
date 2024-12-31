@@ -39,6 +39,7 @@ function displayProductList(products) {
         <td>${product.productName}</td>
         <td><img src="${product.imageUrl}" alt="${product.productName}" style="width: 50px; height: auto;" /></td>
         <td>${product.productBrand}</td>
+        <td>${product.stockQuantity}</td>
         <td>${product.price.toLocaleString()} VND</td>
         <td>
           <input type="checkbox" class="product-checkbox" value="${product.productId}">

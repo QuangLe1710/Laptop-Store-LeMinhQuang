@@ -27,7 +27,7 @@ function editProduct(productId) {
       document.getElementById("edit-releaseDate").value = productDetail.releaseDate;
       document.getElementById("edit-warrantyPeriod").value =
         productDetail.warrantyPeriod;
-      document.getElementById("edit-imageUrl").value = productDetail.imageUrl;
+      // document.getElementById("edit-imageUrl").value = productDetail.imageUrl;
 
       // Điền thông tin CPU, RAM, ổ cứng, màn hình...
       document.getElementById("edit-cpuCompany").value = productDetail.cpuCompany;
@@ -191,6 +191,79 @@ document
         console.log('id productDes trước khi update  :',idProductDes);
         console.log('id productSuppiler  trước khi update :',idSupplier);
       // Thu thập dữ liệu từ các trường trong form sửa
+      const productImageInputEdit = document.getElementById('edit-productImage');
+
+      // Hàm tính hash của ảnh (sử dụng FileReader)
+      async function calculateImageHash(file) {
+          return new Promise((resolve, reject) => {
+              const reader = new FileReader();
+              reader.onload = function () {
+                  // Tính hash bằng cách băm nội dung ảnh (arrayBuffer)
+                  const arrayBuffer = reader.result;
+                  const hash = CryptoJS.MD5(CryptoJS.lib.WordArray.create(arrayBuffer)).toString();
+                  resolve(hash);
+              };
+              reader.onerror = reject;
+              reader.readAsArrayBuffer(file);
+          });
+      }
+
+      // Hàm tải ảnh lên imgBB
+      async function uploadImageToImgBB(file) {
+          const apiKey = '47d7b1dbc4df2574ecd46a6940f1f7b0'; // Thay bằng API Key của bạn
+
+          const formData = new FormData();
+          formData.append('image', file);
+
+          try {
+              const response = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
+                  method: 'POST',
+                  body: formData,
+              });
+
+              const data = await response.json();
+              if (data.success) {
+                  return data.data.url; // Trả về URL của ảnh
+              } else {
+                  console.error('Lỗi tải ảnh lên imgBB:', data.message);
+                  return null;
+              }
+          } catch (error) {
+              console.error('Có lỗi khi gửi yêu cầu tới imgBB:', error);
+              return null;
+          }
+      }
+
+      // Tính hash của ảnh
+      const imageFile = productImageInputEdit.files[0];
+      if (!imageFile) {
+        alert('Bạn chưa chọn ảnh. Vui lòng chọn ảnh trước khi lưu.');
+        return; // Dừng xử lý nếu không có ảnh
+    }
+      const imageHash = await calculateImageHash(imageFile);
+
+      // Kiểm tra xem hash đã tồn tại trong cache chưa
+      let imageUrlEdit = null;
+      const cachedImage = uploadedImagesCache.find(item => item.hash === imageHash);
+
+      if (cachedImage) {
+          // Nếu hash đã tồn tại, lấy URL từ cache
+          console.log('Ảnh đã tồn tại. Sử dụng URL cũ:', cachedImage.url);
+          imageUrlEdit = cachedImage.url;
+      } else {
+          // Nếu chưa tồn tại, tải ảnh lên imgBB
+          imageUrlEdit = await uploadImageToImgBB(imageFile);
+          if (!imageUrlEdit) {
+              alert('Có lỗi xảy ra khi tải ảnh lên imgBB');
+              return;
+          }
+
+          // Lưu hash và URL mới vào cache
+          uploadedImagesCache.push({ hash: imageHash, url: imageUrlEdit });
+      }
+      console.log("link ảnh đang có ở cloud",uploadedImagesCache);
+      console.log("link ảnh để PUT",imageUrlEdit);
+
       const updatedProduct = {
         productId:idProduct,
         supplierId:idSupplier,
@@ -204,7 +277,7 @@ document
         ),
         releaseDate: document.getElementById("edit-releaseDate").value,
         warrantyPeriod: document.getElementById("edit-warrantyPeriod").value,
-        imageUrl: document.getElementById("edit-imageUrl").value,
+        imageUrl: imageUrlEdit,
         // Các thông số kỹ thuật khác
         cpuCompany: document.getElementById("edit-cpuCompany").value,
         cpuTechnology: document.getElementById("edit-cpuTechnology").value,
@@ -335,8 +408,7 @@ document
       // Làm mới danh sách sản phẩm (nếu có)
       refreshProductList();
     } catch (error) {
-      // Xử lý lỗi
-    //   console.error("Error updating product:", error);
+   console.error("Error updating product:", error);
       alert("Đã cập nhật thông tin sản phẩm");
       window.location.reload();
     }

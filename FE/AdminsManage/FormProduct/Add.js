@@ -1,3 +1,5 @@
+let uploadedImagesCache = [];
+console.log("link ảnh đang có ở cloud",uploadedImagesCache);
 async function addproduct() {
   try {
       // Thu thập dữ liệu từ các trường trong form
@@ -6,6 +8,73 @@ async function addproduct() {
         return;
         // location.reload();
       }
+      const productImageInput = document.getElementById('productImage');
+
+      // Hàm tính hash của ảnh (sử dụng FileReader)
+      async function calculateImageHash(file) {
+          return new Promise((resolve, reject) => {
+              const reader = new FileReader();
+              reader.onload = function () {
+                  // Tính hash bằng cách băm nội dung ảnh (arrayBuffer)
+                  const arrayBuffer = reader.result;
+                  const hash = CryptoJS.MD5(CryptoJS.lib.WordArray.create(arrayBuffer)).toString();
+                  resolve(hash);
+              };
+              reader.onerror = reject;
+              reader.readAsArrayBuffer(file);
+          });
+      }
+
+      // Hàm tải ảnh lên imgBB
+      async function uploadImageToImgBB(file) {
+          const apiKey = '47d7b1dbc4df2574ecd46a6940f1f7b0'; // Thay bằng API Key của bạn
+
+          const formData = new FormData();
+          formData.append('image', file);
+
+          try {
+              const response = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
+                  method: 'POST',
+                  body: formData,
+              });
+
+              const data = await response.json();
+              if (data.success) {
+                  return data.data.url; // Trả về URL của ảnh
+              } else {
+                  console.error('Lỗi tải ảnh lên imgBB:', data.message);
+                  return null;
+              }
+          } catch (error) {
+              console.error('Có lỗi khi gửi yêu cầu tới imgBB:', error);
+              return null;
+          }
+      }
+
+      // Tính hash của ảnh
+      const imageFile = productImageInput.files[0];
+      const imageHash = await calculateImageHash(imageFile);
+
+      // Kiểm tra xem hash đã tồn tại trong cache chưa
+      let imageUrl = null;
+      const cachedImage = uploadedImagesCache.find(item => item.hash === imageHash);
+
+      if (cachedImage) {
+          // Nếu hash đã tồn tại, lấy URL từ cache
+          console.log('Ảnh đã tồn tại. Sử dụng URL cũ:', cachedImage.url);
+          imageUrl = cachedImage.url;
+      } else {
+          // Nếu chưa tồn tại, tải ảnh lên imgBB
+          imageUrl = await uploadImageToImgBB(imageFile);
+          if (!imageUrl) {
+              alert('Có lỗi xảy ra khi tải ảnh lên imgBB');
+              return;
+          }
+
+          // Lưu hash và URL mới vào cache
+          uploadedImagesCache.push({ hash: imageHash, url: imageUrl });
+      }
+      const now = new Date();
       const updatedProduct = {
           productId:null,
           supplierId: idSupplier, // ID nhà cung cấp
@@ -14,10 +83,10 @@ async function addproduct() {
           productBrand: document.getElementById("productBrand").value,
           model: document.getElementById("model").value,
           price: parseFloat(document.getElementById("price").value),
-          stockQuantity: parseInt(document.getElementById("stockQuantity").value),
-          releaseDate: document.getElementById("releaseDate").value,
+          stockQuantity: 0,
+          releaseDate: now.toISOString().slice(0, 16),
           warrantyPeriod: document.getElementById("warrantyPeriod").value,
-          imageUrl: document.getElementById("imageUrl").value,
+          imageUrl,
           // Các thông số kỹ thuật khác
           cpuCompany: document.getElementById("cpuCompany").value,
           cpuTechnology: document.getElementById("cpuTechnology").value,
