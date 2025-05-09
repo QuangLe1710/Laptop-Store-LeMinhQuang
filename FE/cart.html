@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ Hàng</title>
+    <link rel="stylesheet" href="assets/css/cart.css">
+    <script src="assets/js/Cart/cart_SubmitOrder.js" defer></script> 
+    <script src="assets/js/Cart/cart.js" defer></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+</head>
+<body>
+    <header class="bg-danger">
+        <div class="container">
+            <div class="row header-custom">
+                <div class="col-2">
+                    <a class="logo" href="">
+                        <img src="https://cdn2.fptshop.com.vn/unsafe/150x0/filters:quality(100)/small/logo_main_2x_ad42cac235.png" alt="Logo trang web" />
+                    </a>
+                </div>
+                <div class="col-5">
+                    <form id="frm-seach" name="seach" action="/tim">
+                        <input type="text" placeholder="Bạn muốn tìm sản phẩm gì" name="q" id="stext" autocomplete="off" style="width: 90%" />
+                        <button type="submit" id="sbutton" style="width: 9%"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+                <div class="col-2">
+                    <div class="user-account" id="userAccount" tabindex="0">
+                        <i class="fa-solid fa-user" style="font-size: 40px;"></i>
+                        <ul class="box-user" id="userMenu">
+                            <li><a href="#" id="loginLink">Đăng nhập</a></li>
+                            <li><a href="#" id="userInfo" style="display: block;">Thông tin cá nhân</a></li>
+                            <li><a href="#" id="orders" style="display: block;">Đơn hàng</a></li>
+                            <li><a href="#" id="logout" style="display: block;">Đăng xuất</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col">
+                    <div class="box-hotline">
+                        <p class="hotline-text"><i class="fa-solid fa-phone"></i><span>HOTLINE</span></p>
+                        <p class="phone-number">0987589660</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="cart">
+                        <a href="cart.html" id="cartLink"><i class="fa-solid fa-cart-shopping" style="font-size: 43px;"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav class="breadcrumb text-center mt-2">
+      <a href="HomePage/index.html" class="btn btn-primary btn-lg shadow" role="button">
+        <span class="breadcrumb-icon">&#x2190;</span> Trang chủ
+      </a>
+      <div class="cart-button-container">
+        <button class="btn btn-secondary btn-lg shadow" id="gioHangLable" onclick="location.reload()">Giỏ hàng</button>
+      </div>
+    </nav>
+    
+    
+  
+
+    <div class="container2">
+        
+        <div class="select-all-container">
+            <label for="selectAll" class="select-all-label">
+                <input type="checkbox" id="selectAll" onclick="toggleSelectAll()"> Chọn tất cả
+            </label>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th>STT</th>
+                    <th>Tên Sản Phẩm</th>
+                    <th>Giá (VNĐ)</th>
+                    <th>Số Lượng</th>
+                    <th>Tổng</th>
+                    <th>Xóa</th>
+                    <th>Xem Chi Tiết</th>
+                </tr>
+            </thead>
+            <tbody id="product-list"></tbody>
+        </table>
+
+        <div class="thanhToan">
+            <h3>Tổng Cộng: <span  class="total-amount">0 VND</span></h3>
+            <h3>Thanh Toán: <span id="tien-phai-thanh-toan" class="total-price">0 VND</span></h3>
+        </div>
+
+        <div class="form-container2">
+            <div class="cart-left">
+                <div class="box-cart">
+                    <div class="title-box-cart">1. Khách hàng chọn địa chỉ nhận hàng</div>
+                    <div class="content-box-cart">
+                        <b>Thông tin địa chỉ</b><br>
+                        <span>*Chọn ít nhất 1 địa chỉ để nhận hàng</span>
+                        <div class="space10"></div>
+                        <table id="address-table">
+                            <thead>
+                                <tr>
+                                    <th>Đường</th>
+                                    <th>Phường/Xã</th>
+                                    <th>Quận/Huyện</th>
+                                    <th>Thành phố</th>
+                                    <th>Chọn</th>
+                                </tr>
+                            </thead>
+                            <tbody id="address-list"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="cart-right">
+                <div class="box-cart2">
+                    <div class="title-box-cart">2. Chọn phương thức thanh toán</div>
+                    <div class="content-box-cart2">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Phương thức thanh toán</th>
+                                    <th>Chọn</th>
+                                </tr>
+                            </thead>
+                            <tbody id="paymentMethodsTable">
+                                <tr>
+                                    <td>Online</td>
+                                    <td><input type="radio" name="paymentMethod" value="card"></td>
+                                </tr>
+                                <tr>
+                                    <td>Offline</td>
+                                    <td><input type="radio" name="paymentMethod" value="cash"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                    </div>
+                </div>
+                <div class="product-actions-single">
+                    <button  type="submit" id="btn-submit" class="action-button green">Gửi đơn hàng</button>
+                    <input type="hidden" name="send_order" value="yes">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="https://esgoo.net/scripts/jquery.js"></script>
+</body>
+</html>

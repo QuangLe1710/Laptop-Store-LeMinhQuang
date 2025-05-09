@@ -1,0 +1,664 @@
+<!--
+=========================================================
+* Material Dashboard 2 - v3.1.0
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/material-dashboard
+* Copyright 2023 Creative Tim (https://www.creative-tim.com)
+* Licensed under MIT (https://www.creative-tim.com/license)
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png" />
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
+    <title>Test modal </title>
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+    <!-- Nucleo Icons -->
+    <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
+    <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+    <!-- CSS Files -->
+    <link id="pagestyle" href="../assets/css/material-dashboard.css?v=3.1.0" rel="stylesheet" />
+    <!-- Nepcha Analytics (nepcha.com) -->
+    <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
+    <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
+</head>
+<style>
+  /* Đặt style cho trang chủ */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+.main-content {
+  padding: 20px;
+  text-align: center;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Style cho modal */
+.modal {
+  display: none; /* Ẩn modal mặc định */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Làm tối phần nền */
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 800px;
+  height: 800px;
+  overflow-y: auto;
+  width: 80%;
+  text-align: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Khi modal hiển thị, làm mờ giao diện chính */
+.blur-background {
+  filter: blur(5px); /* Độ mờ */
+}
+
+/* Style cho form */
+.form-group {
+  margin-bottom: 15px;
+  display: flex; /* Sử dụng Flexbox để căn chỉnh các phần tử ngang hàng */
+  align-items: center; /* Canh giữa theo chiều dọc */
+}
+
+label {
+  width: 300px; /* Đặt chiều rộng cố định cho nhãn */
+  font-size: 16px;
+  margin-right: 10px; /* Khoảng cách giữa nhãn và input */
+  text-align: left;
+}
+.entity {
+  text-align: left;
+  margin: 30px 0;
+}
+input, textarea {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid rgb(180, 173, 173);
+  border-radius: 4px;
+}
+
+textarea {
+  resize: vertical;
+}
+
+button[type="submit"] {
+  margin: 0 auto;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: rgb(0, 0, 0);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  margin-top: 20px; /* Khoảng cách giữa các trường nhập liệu và nút submit */
+}
+
+button[type="submit"]:hover {
+  background-color: rgb(53, 53, 53);
+}
+
+hr {
+  margin-bottom: 30px;
+  height: 1px;
+  border: none;
+  background: linear-gradient(to right , rgba(0,0,0,0), #000, rgba(0,0,0,0));
+}
+
+.line {
+    position: relative;
+    width: 100%;
+    height: 1px; /* Độ dày của đường */
+    background-color: black;
+    overflow: hidden;
+    border: none;
+    background: linear-gradient(to right , rgba(0,0,0,0), #000, rgba(0,0,0,0));
+  }
+
+
+
+</style>
+<body class="g-sidenav-show bg-gray-200">
+  <!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Giao diện trang chủ</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="scroll">
+  <div class="main-content">
+    <h1>Trang chủ</h1>
+    <p>Đoan này là các bảng.</p>
+    <button id="openModal">Ấn nút 3 chấm </button>
+  </div>
+
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span id="closeModal" class="close">&times;</span>
+      <h2>Nhập thông tin</h2>
+      
+      <form id="infoForm">
+        <!-- Tong quan ------------------------------------------------------------------------- -->
+        <h2 class="entity">
+          Tổng quan 
+        </h2>
+        <hr >
+        <div class="glow"></div>
+        <div class="form-group">
+          <label for="name">Ten san pham </label>
+          <input type="text" id="name" name="name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="brand">Hang</label>
+          <input type="text" id="brand" name="brand" required>
+        </div>
+
+        <div class="form-group">
+          <label for="price">Gia tien</label>
+          <input type="text" id="price" name="price " required>
+        </div>
+
+          <!-- GPU--------------------------------------------------------------------------------- -->
+          <h2 class="entity">
+            GPU
+          </h2>
+          <hr class="line">
+        <div class="form-group">
+            <label for="cpucompany">Hãng CPU </label>
+            <input type="text" id="cpucompany" name="name" required>
+          </div>
+        <div class="form-group">
+            <label for="cpu"> CPU </label>
+            <input type="text" id="cpu" name="name" required>
+          </div>
+        <div class="form-group">
+            <label for="cputype">Loại CPU </label>
+            <input type="text" id="cputype" name="name" required>
+          </div>
+        <div class="form-group">
+            <label for="miniumspeed">Tốc độ tối thiểu CPU </label>
+            <input type="text" id="miniumspeed" name="name" required>
+          </div>
+        <div class="form-group">
+            <label for="maxspeed">Tốc độ tối đa CPU </label>
+            <input type="text" id="maxspeed" name="name" required>
+          </div>
+        <div class="form-group">
+            <label for="multiplier">Hệ số nhân</label>
+            <input type="text" id="multiplier" name="name" required>
+          </div>
+        <div class="form-group">
+            <label for="cache">Bộ nhớ Cache</label>
+            <input type="text" id="cache" name="name" required>
+          </div>
+        <!-- Mainboard---------------------------------------------------------------------------- -->
+        <h2 class="entity">
+          Bo mạch chủ
+        </h2>
+        <hr>
+        <div class="form-group">
+          <label for="brandboard">Hãng bo mạch chủ</label>
+          <input type="text" id="brandboard" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="modelboard">Model bo mạch chủ</label>
+          <input type="text" id="modelboard" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="nameboard">Tên bo mạch chủ</label>
+          <input type="text" id="nameboard"  name="name" required>
+        </div>
+        <div class="form-group">
+          <label for=""></label>
+          <input type="text" id="" name="name" required>
+        </div>
+        <!-- Card đồ họa -------------------------------------------------------------------------- -->
+        <h2 class="entity">
+          Đồ họa
+        </h2>
+        <hr>
+        <div class="form-group">
+          <label for="brandcard">Hãng card đồ họa</label>
+          <input type="text" id="brandcard" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="namecard">Card đồ họa</label>
+          <input type="text" id="namecard name="name" required>
+        </div>
+        <!-- -RAM------------------------------------------------------------------------------------- -->
+        <h2 class="entity">
+          RAM
+        </h2>
+        <hr>
+        <div class="form-group">
+          <label for="ramcapacity">Dung lượng RAM</label>
+          <input type="text" id="ramcapacity" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="Ramtype">Loại RAM</label>
+          <input type="text" id="Ramtype" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="ramspeed">Tốc độ RAM</label>
+          <input type="text" id="ramspeed "name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="portram">Khe ram</label>
+          <input type="text" id="portram" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="maxram">Dung lượng Ram tối đa</label>
+          <input type="text" id="maxram" name="name" required>
+        </div>
+        <!-- --------------------------------------------------------------------------------------- -->
+        <h2 class="entity">
+          Lưu trữ 
+        </h2>
+        <hr>
+        <div class="form-group">
+          <label for="harddrivetype">Loại ổ cứng</label>
+          <input type="text" id="" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="harddrivecapacity">Dung lượng ổ cứng</label>
+          <input type="text" id="harddrivecapacity" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="harddriveport">Khe ổ cứng</label>
+          <input type="text" id="harddriveport name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="maxcapacityharddrive">Dung lượng tối đa</label>
+          <input type="text" id="maxcapacityharddrive" name="name" required>
+        </div>
+        <!-- screen------------------------------------------------------------------------------------- -->
+        <h2 class="entity">
+          Màn hình 
+        </h2>
+        <hr>
+        <div class="form-group">
+          <label for="screensize">Kích thước màn hình</label>
+          <input type="text" id="screensize" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="techscreen">Công nghệ màn hình</label>
+          <input type="text" id="techscreen"name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="resolution">Độ phân giải</label>
+          <input type="text" id="resolution" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="screentype">Loại màn hình</label>
+          <input type="text" id="screentype" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="frequency">Tần số quét</label>
+          <input type="text" id="frequency" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="brightness">Độ sáng</label>
+          <input type="text" id="brightness" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="colorcover">Độ bao phủ màu sắc</label>
+          <input type="text" id="colorcover" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="screenratio">Tỉ lệ màn hình</label>
+          <input type="text" id="screenratio" name="name" required>
+        </div>
+        <!-- Kết nối----------------------------------------------------------------------------------- -->
+        <h2 class="entity">
+          Kết nối
+        </h2>
+        <hr>
+        <div class="form-group">
+          <label for="connectport">Cổng kết nối</label>
+          <input type="text" id="connectport" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="wifi">Wi-fi</label>
+          <input type="text" id="wifi" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="bluetooth">Bluetooth</label>
+          <input type="text" id="bluetooth" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="webcam">Webcam</label>
+          <input type="text" id="webcam" name="name" required>
+        </div>
+        <!-- OS----------------------------------------------------------------------------------------- -->
+        <h2 class="entity">
+          Hệ điều hành
+        </h2>
+        <hr>
+        <div class="form-group">
+          <label for="os">Hệ điều hành</label>
+          <input type="text" id="os" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="osversion">Phiên bản </label>
+          <input type="text" id="osversion" name="name" required>
+        </div>
+        <!-- Security----------------------------------------------------------------------------------- -->
+        <h2 class="entity">
+          Bảo mật
+        </h2>
+        <hr>
+        <div class="form-group">
+          <label for="security">Bảo mật</label>
+          <input type="text" id="security" name="name" required>
+        </div>
+        <!-- Keyboard--------------------------------------------------------------------------------- -->
+        <h2 class="entity">
+          Bàn phím
+        </h2>
+        <hr>
+        <div class="form-group">
+          <label for="keyboardtype">Kiểu bản phím</label>
+          <input type="text" id="keyboardtype" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="numkeyboard">Bàn phím số</label>
+          <input type="text" id="numkeyboard" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="keyboardlight">Đèn bàn phím</label>
+          <input type="text" id="keyboardlight" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="touchpad">Touchpad</label>
+          <input type="text" id="touchpad" name="name" required>
+        </div>
+        <!-- Pin sạc-------------------------------------------------------------------------------------- -->
+        <h2 class="entity">
+          Thông tin pin & sạc
+        </h2>
+        <hr>
+        <div class="form-group">
+          <label for="batterytype">Loại pin</label>
+          <input type="text" id="" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="batterycapacity">Dung lượng pin</label>
+          <input type="text" id="batterycapacity" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="powersupply">Công suất nguồn</label>
+          <input type="text" id="powersupply" name="name" required>
+        </div>
+        <!-- Thiet ke--------------------------------------------------------------------------------- -->
+        <h2 class="entity">
+          Thiết kế
+        </h2>
+        <hr>
+        <div class="form-group">
+          <label for="size">Kích thước </label>
+          <input type="text" id="size" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="weight">Trọng lượng</label>
+          <input type="text" id="weight" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="material">Chất liệu sản phẩm</label>
+          <input type="text" id="material" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="color">Màu sắc </label>
+          <input type="text" id="color" name="name" required>
+        </div>
+      
+        <!-- Thong tin san pham ------------------------------------------------------------------------ -->
+        <h2 class="entity">
+          Thông tin sản phẩm 
+        </h2>
+        <hr>
+        <div class="form-group">
+          <label for="code">Mã sản phẩm</label>
+          <input type="text" id="code" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="releaseDate">Ngày phát hành</label>
+          <input type="text" id="releaseDate" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="warranty">Thời hạn bảo hành</label>
+          <input type="text" id="warranty" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="use">Hướng dẫn sử dụng</label>
+          <input type="text " id="use" name="name" required row="2">
+        </div>
+        <div class="form-group">
+          <label for="baoquan">Hướng dẫn bảo quản</label>
+          <input type="text" id="baoquan" name="name" required>
+        </div>
+
+  
+          
+
+        <hr>
+        <div class="form-group">
+          <button type="submit"> THEM </button>
+          <button type="submit"> SUA </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
+
+
+
+    <!--   Core JS Files   -->
+    <script>
+      // Lấy các phần tử cần thiết
+const openModalButton = document.getElementById("openModal");
+const modal = document.getElementById("modal");
+const closeModalButton = document.getElementById("closeModal");
+const mainContent = document.querySelector(".main-content");
+const infoForm = document.getElementById("infoForm");
+
+// Mở modal khi ấn button
+openModalButton.addEventListener("click", () => {
+  modal.style.display = "flex"; // Hiển thị modal
+  mainContent.classList.add("blur-background"); // Thêm hiệu ứng mờ cho giao diện chính
+});
+
+// Đóng modal khi ấn vào nút đóng
+closeModalButton.addEventListener("click", closeModal);
+
+// Đóng modal khi click bên ngoài modal-content
+window.addEventListener("click", (event) => {
+  if (event.target == modal) {
+    closeModal();
+  }
+});
+
+// Hàm đóng modal
+function closeModal() {
+  modal.style.display = "none"; // Ẩn modal
+  mainContent.classList.remove("blur-background"); // Bỏ hiệu ứng mờ
+}
+
+// Xử lý sự kiện submit form
+infoForm.addEventListener("submit", (event) => {
+  event.preventDefault(); // Ngăn form reload trang
+
+  // Lấy giá trị từ các input
+  const name = document.getElementById("name").value;
+  const age = document.getElementById("brand").value;
+  const address = document.getElementById("price").value;
+
+  // Thực hiện thao tác xử lý dữ liệu, ví dụ: console.log dữ liệu
+  console.log("Thông tin đã nhập:", { name, age, address });
+
+  // Sau khi lưu thông tin, đóng modal
+  closeModal();
+});
+
+    </script>
+    <script src="../assets/js/core/popper.min.js"></script>
+    <script src="../assets/js/core/bootstrap.min.js"></script>
+    <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
+    <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+    <script src="../assets/js/plugins/chartjs.min.js"></script>
+    <script>
+        var win = navigator.platform.indexOf("Win") > -1;
+        if (win && document.querySelector("#sidenav-scrollbar")) {
+            var options = {
+                damping: "0.5",
+            };
+            Scrollbar.init(document.querySelector("#sidenav-scrollbar"), options);
+        }
+    </script>
+    <!-- css  -->
+    <script>
+        var ctx2 = document.getElementById("chart-line").getContext("2d");
+
+        new Chart(ctx2, {
+            type: "line",
+            data: {
+                labels: [
+                    "Apr",
+                    "May",
+                    "Jun",
+                    "Jul",
+                    "Aug",
+                    "Sep",
+                    "Oct",
+                    "Nov",
+                    "Dec",
+                ],
+                datasets: [{
+                    label: "Mobile apps",
+                    tension: 0,
+                    borderWidth: 0,
+                    pointRadius: 5,
+                    pointBackgroundColor: "rgba(255, 255, 255, .8)",
+                    pointBorderColor: "transparent",
+                    borderColor: "rgba(255, 255, 255, .8)",
+                    borderColor: "rgba(255, 255, 255, .8)",
+                    borderWidth: 4,
+                    backgroundColor: "transparent",
+                    fill: true,
+                    data: [50, 40, 300, 320, 500, 350, 200, 230, 500],
+                    maxBarThickness: 6,
+                }, ],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
+                interaction: {
+                    intersect: false,
+                    mode: "index",
+                },
+                scales: {
+                    y: {
+                        grid: {
+                            drawBorder: false,
+                            display: true,
+                            drawOnChartArea: true,
+                            drawTicks: false,
+                            borderDash: [5, 5],
+                            color: "rgba(255, 255, 255, .2)",
+                        },
+                        ticks: {
+                            display: true,
+                            color: "#f8f9fa",
+                            padding: 10,
+                            font: {
+                                size: 14,
+                                weight: 300,
+                                family: "Roboto",
+                                style: "normal",
+                                lineHeight: 2,
+                            },
+                        },
+                    },
+                    x: {
+                        grid: {
+                            drawBorder: false,
+                            display: false,
+                            drawOnChartArea: false,
+                            drawTicks: false,
+                            borderDash: [5, 5],
+                        },
+                        ticks: {
+                            display: true,
+                            color: "#f8f9fa",
+                            padding: 10,
+                            font: {
+                                size: 14,
+                                weight: 300,
+                                family: "Roboto",
+                                style: "normal",
+                                lineHeight: 2,
+                            },
+                        },
+                    },
+                },
+            },
+        });
+    </script>
+    <!-- Github buttons -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="../assets/js/material-dashboard.min.js?v=3.1.0"></script>
+</body>
+
+</html>

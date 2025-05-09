@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Đơn hàng của tôi</title>
+        
+        <!-- link để nhúng icon -->
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        />
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous"
+        />
+        <link rel="stylesheet" href="assets/css/home.css" />
+        <link rel="stylesheet" href="../assets/css/My_Order.css">
+    </head>
+
+<body>
+    <header class="" style="background-color:rgba(241, 18, 18, 0.884);">
+        <div class="container ">
+          <div class="row header-custom">
+  
+            <!-- Button Logo -->
+            <div class="col-2">
+              <a class="logo" href="">
+                <img
+                  src="https://cdn2.fptshop.com.vn/unsafe/150x0/filters:quality(100)/small/logo_main_2x_ad42cac235.png"
+                  alt="Logo trang web"
+                />
+              </a>
+            </div>
+  
+            <!-- Button thanh tìm kiếm -->
+            <div class="col-5">
+              <div class="seach-form">
+                <form id="frm-seach" name="seach" action="/tim">
+                  <input
+                    type="text"
+                    placeholder="Bạn muốn tìm sản phẩm gì"
+                    name="q"
+                    id="stext"
+                    autocomplete="off"
+                    style="width: 90%"
+                  />
+                  <button type="submit" id="sbutton" style="width: 9%">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </form>
+              </div>
+            </div>
+  
+            <!-- Button infor User -->
+            <div class="col-2">
+              <div class="user-account" id="userAccount" tabindex="0">
+                <i
+                  class="fa-solid fa-user"
+                  style="width: 50px; height: 50px; font-size: 40px"
+                ></i>
+                <ul class="box-user" id="userMenu" style="display: none">
+                  <li><a href="#" id="loginLink">Đăng nhập</a></li>
+                  <li>
+                    <a href="#" id="userInfo" style="display: none"
+                      >Thông tin cá nhân</a
+                    >
+                  </li>
+                  <li>
+                    <a href="#" id="orders" style="display: none">Đơn hàng</a>
+                  </li>
+                  <li>
+                    <a href="#" id="logout" style="display: none">Đăng xuất</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+  
+            <!-- Button liên hệ -->
+            <div class="col">
+              <div class="box-hotline">
+                <p class="hotline-text">
+                  <i class="fa-solid fa-phone"></i>
+                  <span style="color: rgb(0, 0, 0)">HOTLINE</span>
+                </p>
+                <p class="phone-number">0987589660</p>
+              </div>
+            </div>
+  
+            <!-- Button giỏ hàng -->
+            <div class="col">
+              <div class="cart">
+                <a href="cart.html" id="cartLink">
+                  <!-- Thay '/cart' bằng đường dẫn giỏ hàng của bạn -->
+                  <i
+                    class="fa-solid fa-cart-shopping"
+                    style="font-size: 43px"
+                  ></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+    </header>
+
+      <!-- Khối thân web -->
+      <div class="container">
+        <!-- Làm Breadcrumbs -->
+        <div class="row">
+            <ul class="breadcrumb col-3">
+                <li><a href="index.html">Trang chủ</a></li>
+                <li><a href="">Đơn hàng của tôi</a></li>
+            </ul>
+        </div>
+
+        <!-- Khối tóm tắt thông tin khách hàng -->
+        <div class="summerize-infor-user col-3 bg-white">
+                <div class="infor-box">
+                    <i class="fa-solid fa-circle-user"
+                    style="font-size: 220%;"></i>
+                    <div class="inner-user-box">
+                        <div class="inner-user-name">
+                            Le Minh Quang
+                        </div>
+                        <div class="inner-user-phoneNumber">
+                            012345678
+                        </div>
+                    </div>
+                    <a href="inforUserDetail_Main.html" style="text-decoration: none;">Xem hồ sơ</a>
+                </div>
+
+              <!-- Khối điều hướng màn hình -->
+                <div class="box-main  bg-white ">
+                    <div class="box-item">
+                        <i class="fa-solid fa-box"
+                        style="font-size: 150%;"></i>
+                        <a href="My_Order.html">Đơn hàng của tôi</a>
+                    </div>
+
+                    <div class="box-item">
+                        <i class="fa-solid fa-location-dot"
+                        style="font-size: 150%;"></i>
+                        <a href="Delivery_Address.html">Địa chỉ nhận hàng</a>
+                    </div>
+
+                    <div class="box-item">
+                        <i class="fa-solid fa-circle-xmark"
+                        style="font-size: 150% ;
+                        margin-left: -8%;"></i>
+                        <a href="">Đăng xuất</a>
+                    </div>
+                </div>
+        </div>
+
+        <!-- Khối quản lý đơn hàng của tài khoản cá nhân -->
+        <div class="box-manage-order col-9 bg-white">
+            <h3>Đơn hàng của tôi</h3>
+            
+            <div class="container mt-4">
+                <!-- Thanh điều hướng -->
+                <ul class="nav nav-tabs" id="filter-nav">
+                  <li class="nav-item">
+                    <a class="nav-link active" href="#" data-filter="all">Tất cả</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#" data-filter="category-1">Pending</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#" data-filter="category-2">Confirmed</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#" data-filter="category-3">Shipped</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#" data-filter="category-4">Delivered</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#" data-filter="category-5">Canceled</a>
+                  </li>
+                </ul>
+            
+                <!-- Bảng -->
+                <table class="table table-striped mt-3">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Tên</th>
+                      <th>Danh mục</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr data-category="category-1">
+                      <td>1</td>
+                      <td>Sản phẩm A</td>
+                      <td>Danh mục 1</td>
+                    </tr>
+                    <tr data-category="category-2">
+                      <td>2</td>
+                      <td>Sản phẩm B</td>
+                      <td>Danh mục 2</td>
+                    </tr>
+                    <tr data-category="category-3">
+                      <td>3</td>
+                      <td>Sản phẩm C</td>
+                      <td>Danh mục 3</td>
+                    </tr>
+                    <tr data-category="category-1">
+                      <td>4</td>
+                      <td>Sản phẩm D</td>
+                      <td>Danh mục 1</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+
+            
+        </div>
+
+        
+
+      </div>
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Xử lý lọc
+    document.querySelectorAll('#filter-nav .nav-link').forEach(navLink => {
+      navLink.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        // Loại bỏ lớp active khỏi các tab
+        document.querySelectorAll('#filter-nav .nav-link').forEach(link => link.classList.remove('active'));
+
+        // Thêm lớp active cho tab được chọn
+        this.classList.add('active');
+
+        // Lấy bộ lọc
+        const filter = this.getAttribute('data-filter');
+
+        // Lọc bảng
+        document.querySelectorAll('table tbody tr').forEach(row => {
+          if (filter === 'all' || row.getAttribute('data-category') === filter) {
+            row.classList.remove('hidden');
+          } else {
+            row.classList.add('hidden');
+          }
+        });
+      });
+    });
+  </script>
